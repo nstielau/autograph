@@ -1,0 +1,20 @@
+$:.unshift(File.dirname(__FILE__)) unless
+  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
+
+require 'rubygems'
+require 'optparse'
+require 'ruport'
+require "ruport/util"
+require 'pp'
+
+require 'autograph/pdf_formatters'
+require 'autograph/autoperf'
+require 'autograph/graph_series'
+
+require 'autograph/graph_renderers/base_renderer'
+require 'autograph/graph_renderers/gchart_renderer'
+require 'autograph/graph_renderers/scruffy_renderer'
+
+module Autograph
+  VERSION = '0.0.1'
+end

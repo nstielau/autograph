@@ -1,0 +1,64 @@
+= autograph
+
+== DESCRIPTION:
+
+FIX (describe your package)
+
+
+== FEATURES/PROBLEMS:
+
+* FIX (list of features or problems)
+
+
+== SYNOPSIS:
+
+  FIX (code sample of usage)
+
+
+== REQUIREMENTS:
+
+* httperf - http://www.hpl.hp.com/research/linux/httperf/
+
+== INSTALL:
+
+* Get httperf installed
+
+You can run 'httperf -h' to see if it is successfully installed and in your PATH.
+
+
+* Get autograph installed
+
+Run 'sudo gem install autograph'
+
+Run 'autograph -h' to check that it is successfully installed.
+
+== THANKS:
+
+Thanks to 
+
+Julian T J Midgley
+Autobench
+http://www.xenoclast.org/autobench/
+
+Ilya Grigorik
+Autoperf
+http://github.com/igrigorik/autoperf/tree
+
+HP
+httperf
+http://www.hpl.hp.com/research/linux/httperf/
+
+
+== LICENSE:
+
+
+Autograph
+Copyright (c) 2009 Nick Stielau
+
+Based on ideas and code from autoperf.rb
+http://github.com/igrigorik/autoperf/tree
+Copyright (C)2008 Ilya Grigorik
+
+
+
+You can redistribute this under the terms of the Ruby license

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title><%= title %></title>
+  <style type="text/css">
+  body,
+  html {
+    margin:0;
+    padding:0;
+    color:#000;
+  }
+  body {
+    min-width:950px;
+  }
+  #wrap {
+    margin:0 auto;
+    width:950px;
+  }
+  #header h1 {
+      padding:5px;
+      margin:0;
+      text-align: center;
+    }
+  #header h3 {
+    margin: 0;
+  }
+  #nav {
+
+    padding:5px;
+  }
+  #nav ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  #nav li{
+    display:inline;
+    margin:0;
+    padding:0;
+  }
+  #main {
+    float:right;
+    width:700px;
+  }
+  #main h2, #main h3, #main p {
+    padding:0 10px;
+    }
+  #sidebar {
+    float:left;
+    width:240px;
+  }
+  #sidebar ul {
+    margin-bottom:0;
+    }
+  #sidebar h3, #sidebar p {
+  padding:0 10px 0 0;
+  }
+  #footer {
+    clear:both;
+  }
+  #footer p {
+    padding:5px;
+    margin:0;
+    }
+    
+  div.report {
+    background: #FFFFFF;
+  }
+  </style>
+  <script type="text/javascript"``>
+    function hide_reports() {
+      var reports = document.getElementsByClassName('report');
+      for (var i=0; i < reports.length; i++) {
+        reports[i].style.display = 'none';
+      }
+    }
+    
+    function show_report(uri) {
+      hide_reports();
+      document.getElementById(uri).style.display = '';
+    }
+    
+    function uri_change_handler(uri) {
+      var page_select = document.getElementById('pages');
+      show_report(page_select.value);
+    }
+  </script>
+
+</head>
+<body>
+<div id="wrap">
+  <div id="header">
+    <h1>Load testing report</h1>
+    <h3>Date: <%= date %></h3>
+    <h3>Host: <%= host %></h3>
+    <h3>Page: 
+      <select id="pages" onchange="uri_change_handler()">
+        <option value='overview'>Overview</option>
+        <% uris.each do |uri|%>
+          <option value='page_<%= uri %>'><%=uri%></option>
+        <% end %>
+      </select>
+    </h3>
+    
+  </div>
+  <div id="nav">
+
+  </div>
+  <div id="sidebar">
+    <div style="display:none">
+      <h3>Tested Pages</h3>
+      <ul>
+        <li><a href="#" onclick="show_report('overview');" title="Overview">Overview</a></li>
+        <% uris.each do |uri|%>
+        <li><a href="#" onclick="show_report('page_<%= uri %>');" title="<%= uri %>"><%= uri %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <% if notes %>
+      <h3>Report Notes</h3>
+      <p><%= notes %></p>
+    <% end %>
+    <h3>Info</h3>
+    <ul>
+      <li><a href="#" onclick="show_report('graph_discussion');" title="Discussion">Discussion</a></li>
+    </ul>
+
+  </div>
+  <div id="main">
+    <h2>Report Detail</h2>
+    
+<div id="overview" class='report'>
+<img src="<%= summary_graph %>"/>
+</div>
+
+<div id="graph_discussion" class='report' style="display:none;">
+Discussion on what these graphs mean.
+
+• Increase concurrent connections, and see at which point your app will no longer serve at the demanded request rate
+• Find which pages are heavier/lighter than others
+• Replay a log (with a little work)
+
+• Actually hits your app with load, doesn't just extrapolate out from a few data points
+• Start broad and zero in on connection limits
+• Run from a server, not your laptop
+</div>
+          
+    <% reports.each do |uri, report| %>
+      <div id="page_<%= uri %>" class='report' style="display:none;">
+        <p>Report for <%= "http://#{host}#{uri}" %></p>
+        <% graphs[uri].each do |graph| %>
+        <img src="<%= graph %>"/>
+        <% end %>
+<pre>
+<%= report.to_s %>
+</pre>
+      </div>
+    <% end %>
+  </div>
+  <div id="footer" align="center">
+    <p>Generated at <%= date %></p>
+    <div>
+    <p><a onclick="document.getElementById('command_container').style.display = 'block';">Show Command<a/></p>
+    <div id="command_container" style="display:none">
+      <pre><%= command_run %></pre>
+    </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

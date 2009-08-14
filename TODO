@@ -1,0 +1,30 @@
+# Report for AVG says "Report for http://127.0.0.1Avg"
+# Skin report page
+# Compare two hosts
+# Config file?
+
+# Factor out outputs types into a report_renderers dir
+# Control verbose output
+
+# Don't include overview for one page...
+# Flag maxes
+# Set report overview y-axis to the max request rate
+
+# Pass httperf args
+# Pick output format
+# Pick graph types
+# take a txt file for the urls
+
+# Remove default timeout httperf option
+# Add interactive mode
+# Add badass testing server
+
+# JS for selecting right view after page refresh
+
+# Fix Graphs x=y!
+
+# --group graphs, or separate into different pages
+
+
+# Trap exit and write output to file? (Can you have two traps?)
+

@@ -1,0 +1,141 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'autograph'
+
+options = {}
+
+command_parts = [File.basename(__FILE__)]
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options]"
+
+  opts.on("-h", "--help", "Displays this help info") do
+    puts opts
+    exit 0
+  end
+
+  opts.on("-v", "Verbose output") do
+    options["verbose"] = true;
+    command_parts << "-v"
+  end
+  
+  opts.on("--average", "Run a round-robin test of all URIs") do
+    options["average"] = true;
+    command_parts << "--average"
+  end
+  
+  opts.on("--output-dir PATH", "Specify a directory to write output files to.") do |opt|
+    options["output_dir"] = opt;
+    command_parts << "--output-dir"
+  end
+
+  # opts.on("--pdf", "Output a pdf") do
+  #   options["pdf"] = true;
+  # end
+  
+  opts.on("-H", "--host HOST", "The host to load test") do |opt|
+    options['host'] = opt
+    command_parts << "--host #{opt}"
+  end
+  
+  opts.on("-p", "--port PORT", Integer, "The port to load test") do |opt|
+    options['port'] = opt
+    command_parts << "--port #{opt}"
+  end
+  
+  opts.on("-t", "--timeout SECONDS", Integer, "The length in seconds before a request is marked as errored") do |opt|
+    options['httperf_timeout'] = opt
+    command_parts << "--timeout #{opt}"
+  end
+  
+  opts.on("--num-call NUMCALLS", Integer, "The number of calls to make for each connection in the test") do |opt|
+    options['httperf_num-call'] = opt
+    command_parts << "--num-call #{opt}"
+  end
+  
+  opts.on("--num-conns NUMCONNS", Integer, "The number of connections to make for each test") do |opt|
+    options['httperf_num-conns'] = opt
+    command_parts << "--num-conns #{opt}"
+  end
+  
+  opts.on("-r RATE", "--rate RATE", Integer, "The rate at which to make requests") do |opt|
+    options['httperf_rate'] = opt
+    command_parts << "--rate #{opt}"
+  end
+  
+  opts.on("-lr LOW_RATE", "--low-rate LOWRATE", Integer, "The starting rate") do |opt|
+    options['low_rate'] = opt
+    command_parts << "-low-rate #{opt}"
+  end
+  
+  opts.on("--hr HIGHRATE", "--high-rate HIGHRATE", Integer, "The highest rate at which to perform a test") do |opt|
+    options['high_rate'] = opt
+    command_parts << "--high-rate #{opt}"
+  end
+  
+  opts.on("-rs RATESTEP", "--rate-step RATESTEP", Integer, "The ammount at which to increment the rate for each interation of the test") do |opt|
+    options['rate_step'] = opt
+    command_parts << "--rate-step #{opt}"
+  end
+  
+  opts.on("--wlog PATH", String, "A file a ASCII nul terminated pages to cycle through") do |opt|
+    options['httperf_wlog'] = "y,#{opt}";
+    command_parts << "--wlog #{opt}"
+  end
+  
+  opts.on("--uris PATH,PATH", String, "A comma separated list of pages to cycle through") do |opt|
+    options['uris'] = opt.split(',')
+    command_parts << "--uris #{opt}"
+  end
+  
+  opts.on("--test", "Do not run benchmarks. Use test data to generate reports.") do |opt|
+    options['use_test_data'] = true
+    command_parts << "--test"
+  end
+  
+  opts.on("--output-file PATH", "Specify the file to output to.") do |opt|
+    options['output_file'] = opt
+    command_parts << "--output-file #{opt}"
+  end
+  
+  opts.on("--notes NOTES", "Notes to be written to the report.") do |opt|
+    options['notes'] = opt
+    command_parts << "--notes '#{opt}'"
+  end
+  
+  opts.on("--wsesslog PATH", "Path to the wsesslog file.") do |opt|
+    options['httperf_wsesslog'] = opt
+    command_parts << "--wsesslog '#{opt}'"
+  end
+
+  begin
+    opts.parse!(ARGV)
+  rescue OptionParser::ParseError => e
+    warn e.message
+    puts opts
+    exit 1
+  end
+end
+
+options["command_run"]  = command_parts.join(" ")
+
+if options['host'].nil?
+  abort("You must specify a host!")
+end
+
+trap("INT") {
+  puts "Terminating autograph."
+  Process.exit
+}
+
+if options['verbose']
+  puts
+  puts "These args were specified from the comnmand line:"
+  options.sort.each do |key, value|
+    puts "  #{key}=#{value}"
+  end
+  puts
+end
+
+AutoPerf.new(options)
