@@ -3,6 +3,8 @@
 # Compare two hosts
 # Config file?
 
+# Deal with AcceptEncoding, add options
+
 # Factor out outputs types into a report_renderers dir
 # Control verbose output
 

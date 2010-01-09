@@ -29,6 +29,7 @@ class AutoPerf
       @conf.delete("httperf_num-call")
       @conf.delete("httperf_num-conns")
       @conf["httperf_add-header"] = "'Content-Type: application/x-www-form-urlencoded\\n'"
+      # TODO: Add AcceptEncoding: gzip,deflate option
     end
     
     @conf['uris'] = @conf['uris'].uniq
