@@ -14,7 +14,3 @@ require 'autograph/graph_series'
 require 'autograph/graph_renderers/base_renderer'
 require 'autograph/graph_renderers/gchart_renderer'
 require 'autograph/graph_renderers/scruffy_renderer'
-
-module Autograph
-  VERSION = '0.0.1'
-end
