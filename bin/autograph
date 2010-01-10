@@ -7,7 +7,7 @@ options = {}
 
 command_parts = [File.basename(__FILE__)]
 
-OptionParser.new do |opts|
+opt_parse_opts = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename($0)} [options]"
 
   opts.on("-h", "--help", "Displays this help info") do
@@ -104,6 +104,8 @@ OptionParser.new do |opts|
     options['httperf_wsesslog'] = opt
     command_parts << "--wsesslog '#{opt}'"
   end
+  
+
 
   begin
     opts.parse!(ARGV)
@@ -112,11 +114,16 @@ OptionParser.new do |opts|
     puts opts
     exit 1
   end
+  
+  opts
 end
 
 options["command_run"]  = command_parts.join(" ")
 
-if options['host'].nil?
+if ARGV.length == 0
+  puts opt_parse_opts
+  exit
+elsif options['host'].nil?
   abort("You must specify a host!")
 end
 
