@@ -9,6 +9,7 @@ require 'pp'
 
 require 'autograph/autoperf'
 require 'autograph/graph_series'
+require 'autograph/html_report'
 
 require 'autograph/graph_renderers/base_renderer'
 require 'autograph/graph_renderers/gchart_renderer'

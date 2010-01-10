@@ -20,9 +20,7 @@ class AutoPerf
              'graph_renderer' => 'GChartRenderer',
              'average' => false,
              'output_dir' => './'
-             }
-                     
-    @conf = @conf.merge(opts)
+             }.merge(opts)
     
     if @conf['httperf_wsesslog']
       puts "Using httperf_wsesslog"
@@ -37,9 +35,7 @@ class AutoPerf
     if opts['verbose']
       puts
       puts "Use these parameters:"
-      @conf.sort.each do |key, value|
-        puts "  #{key}=#{value}"
-      end
+      @conf.sort.each{ |k, v| puts "  #{k}=#{v}"}
       puts
     end
 
@@ -48,7 +44,7 @@ class AutoPerf
   
   
   def run
-    @reports  = {}
+    @reports = {}
     @graphs = {}
 
     if @conf['use_test_data']
@@ -136,11 +132,11 @@ class AutoPerf
       @graphs[uri] = []
       
       puts "For '#{uri}' the values are #{report.column('reply time').join(', ')}" if @conf['verbose']      
-      myg = graph_renderer_class.new
-      myg.title = "Demanded vs. Achieved Request Rate (r/s)"
-      myg.path = uri
-      myg.width  = 600
-      myg.height = 300
+      graph_1 = graph_renderer_class.new
+      graph_1.title = "Demanded vs. Achieved Request Rate (r/s)"
+      graph_1.path = uri
+      graph_1.width  = 600
+      graph_1.height = 300
 
       if @reports['Avg']
         avg_request_rate = GraphSeries.new
@@ -148,7 +144,7 @@ class AutoPerf
         avg_request_rate.x_values = report.column('rate')
         avg_request_rate.y_values = @reports['Avg'].column('conn/s').map{|x| x.to_f}
         avg_request_rate.label = "Avg"
-        myg.add_series(avg_request_rate)
+        graph_1.add_series(avg_request_rate)
       end
       
       request_rate = GraphSeries.new
@@ -156,15 +152,15 @@ class AutoPerf
       request_rate.x_values = report.column('rate')
       request_rate.y_values = report.column('conn/s').map{|x| x.to_f}
       request_rate.label = "Requests for '#{uri}'"
-      myg.add_series(request_rate)
+      graph_1.add_series(request_rate)
       
-      @graphs[uri] << myg.to_html
+      @graphs[uri] << graph_1.to_html
 
-      myg2 = graph_renderer_class.new
-      myg2.path = uri
-      myg2.title = "Demanded Request Rate (r/s) vs. Response Time"
-      myg2.width  = 600
-      myg2.height = 300
+      graph_2 = graph_renderer_class.new
+      graph_2.path = uri
+      graph_2.title = "Demanded Request Rate (r/s) vs. Response Time"
+      graph_2.width  = 600
+      graph_2.height = 300
       
       if @reports['Avg']
         avg_response_time = GraphSeries.new
@@ -172,7 +168,7 @@ class AutoPerf
         avg_response_time.x_values = report.column('rate')
         avg_response_time.y_values = @reports['Avg'].column('reply time').map{|x| x.to_f}
         avg_response_time.label = "Avg"
-        myg2.add_series(avg_response_time)
+        graph_2.add_series(avg_response_time)
       end
       
       response_time = GraphSeries.new
@@ -180,16 +176,16 @@ class AutoPerf
       response_time.x_values = report.column('rate')
       response_time.y_values = report.column('reply time').map{|x| x.to_f}
       response_time.label = "Requests for '#{uri}'"
-      myg2.add_series(response_time)
+      graph_2.add_series(response_time)
 
-      @graphs[uri] << myg2.to_html
+      @graphs[uri] << graph_2.to_html
     end
     
-    myg3 = graph_renderer_class.new
-    #myg3.path = uri
-    myg3.title = "Max Achieved Connection Rate"
-    myg3.width  = 600
-    myg3.height = 300  
+    graph_3 = graph_renderer_class.new
+    #graph_3.path = uri
+    graph_3.title = "Max Achieved Connection Rate"
+    graph_3.width  = 600
+    graph_3.height = 300  
     
     @reports.keys.each do |key|
       max = @reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
@@ -198,9 +194,9 @@ class AutoPerf
       max_request_rate.x_values = [key]
       max_request_rate.y_values = [max]
       max_request_rate.label = "Max Request Rate for '#{key}'"
-      myg3.add_series(max_request_rate)
+      graph_3.add_series(max_request_rate)
     end
-    @summary_graph = myg3
+    @summary_graph = graph_3
     
   end
   
@@ -224,36 +220,17 @@ class AutoPerf
 
 
   def generate_html_report
-    host = @conf['host']
-    title = "Report for #{host}"
-    uris = @conf['uris']
-    date = Time.now
-    reports = @reports
-    graphs = @graphs
-    command_run = @conf["command_run"]
-    summary_graph = @summary_graph.to_html
-    notes = @conf["notes"]
-
-    template = File.read(File.dirname(__FILE__) + '/report.html.erb')
-    result   = ERB.new(template).result(binding)
-  
-    output_file = determine_output_file()
-  
-    File.open(output_file, "w") do |file|
-      file.puts result.to_s
-    end
-  end
-  
-  def determine_output_file
-    return @conf['output_file'].to_s if @conf['output_file']
-    file = File.join(@conf['output_dir'], "load_test.html")
-    i = 1
-    while File.exist?(file) do
-      i = i + 1
-      file = File.join(@conf['output_dir'], "load_test_#{i}.html")
-    end
-    puts "File is #{file}"
-    file
+    HtmlReport.new({
+      'host' => @conf['host'],
+      'title' => "Report for #{host}",
+      'uris' => @conf['uris'],
+      'date' => Time.now,
+      'reports' => @reports,
+      'graphs' => @graphs,
+      'command_run' => @conf["command_run"],
+      'summary_graph' => @summary_graph.to_html,
+      'notes' => @conf["notes"]
+    })
   end
   
   def graph_renderer_class
