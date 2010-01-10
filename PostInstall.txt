@@ -1,6 +1,0 @@
-
-For more information on autograph, see http://autograph.rubyforge.org
-
--Autograph
-
-
