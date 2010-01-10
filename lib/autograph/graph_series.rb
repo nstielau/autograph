@@ -5,6 +5,12 @@ class GraphSeries
   attr :type, true
   attr :path, true
   
-  #TODO: Syntax sugar constructor
+  def initialize(t, xs, ys, l, p=nil)
+    @type = t
+    @x_values = xs.map{|x| x.to_f}
+    @y_values = ys.map{|x| x.to_f}
+    @label = l
+    @path = p
+  end
 
 end

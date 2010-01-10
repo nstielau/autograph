@@ -139,19 +139,11 @@ class AutoPerf
       graph_1.height = 300
 
       if @reports['Avg']
-        avg_request_rate = GraphSeries.new
-        avg_request_rate.type = :area
-        avg_request_rate.x_values = report.column('rate')
-        avg_request_rate.y_values = @reports['Avg'].column('conn/s').map{|x| x.to_f}
-        avg_request_rate.label = "Avg"
+        avg_request_rate = GraphSeries.new(:area, report.column('rate'), @reports['Avg'].column('conn/s').map{|x| x.to_f}, "Avg")
         graph_1.add_series(avg_request_rate)
       end
       
-      request_rate = GraphSeries.new
-      request_rate.type = :line
-      request_rate.x_values = report.column('rate')
-      request_rate.y_values = report.column('conn/s').map{|x| x.to_f}
-      request_rate.label = "Requests for '#{uri}'"
+      request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Requests for '#{uri}'")
       graph_1.add_series(request_rate)
       
       @graphs[uri] << graph_1.to_html
@@ -163,11 +155,7 @@ class AutoPerf
       graph_2.height = 300
       
       if @reports['Avg']
-        avg_response_time = GraphSeries.new
-        avg_response_time.type = :area
-        avg_response_time.x_values = report.column('rate')
-        avg_response_time.y_values = @reports['Avg'].column('reply time').map{|x| x.to_f}
-        avg_response_time.label = "Avg"
+        avg_response_time = GraphSeries.new(:area, report.column('rate'), @reports['Avg'].column('reply time').map{|x| x.to_f}, "Avg")
         graph_2.add_series(avg_response_time)
       end
       
