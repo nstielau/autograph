@@ -29,10 +29,6 @@ OptionParser.new do |opts|
     options["output_dir"] = opt;
     command_parts << "--output-dir"
   end
-
-  # opts.on("--pdf", "Output a pdf") do
-  #   options["pdf"] = true;
-  # end
   
   opts.on("-H", "--host HOST", "The host to load test") do |opt|
     options['host'] = opt

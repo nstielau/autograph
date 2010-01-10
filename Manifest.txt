@@ -8,7 +8,6 @@ bin/autograph
 lib/autograph.rb
 lib/autograph/autoperf.rb
 lib/autograph/graph_series.rb
-lib/autograph/pdf_formatters.rb
 lib/autograph/report.html.erb
 lib/autograph/graph_renderers/base_renderer.rb
 lib/autograph/graph_renderers/gchart_renderer.rb

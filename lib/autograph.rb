@@ -7,7 +7,6 @@ require 'ruport'
 require "ruport/util"
 require 'pp'
 
-require 'autograph/pdf_formatters'
 require 'autograph/autoperf'
 require 'autograph/graph_series'
 
