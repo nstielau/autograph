@@ -118,14 +118,14 @@ opt_parse_opts = OptionParser.new do |opts|
   opts
 end
 
-options["command_run"]  = command_parts.join(" ")
-
-if ARGV.length == 0
+if options.length == 0
   puts opt_parse_opts
   exit
 elsif options['host'].nil?
   abort("You must specify a host!")
 end
+
+options["command_run"]  = command_parts.join(" ")
 
 trap("INT") {
   puts "Terminating autograph."
