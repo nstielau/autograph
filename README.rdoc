@@ -2,35 +2,32 @@
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Autograph drives httperf, varying the request rate and graphing the output.  This exercise provides graphical data showing how the requested resources hold up under an increasing rate, particularly with request to response time and achieved request rate.
 
+Can work with SOAP.
 
-== FEATURES/PROBLEMS:
+== PROBLEMS:
 
-* FIX (list of features or problems)
-
+* No 'AcceptEncoding' support
+* Limited to the load generation capabilities of a single server.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  autograph --host example.com --low-rate 5 --high-rate 25 --rate-step 5
 
-
-== REQUIREMENTS:
-
-* httperf - http://www.hpl.hp.com/research/linux/httperf/
+  autograph --host example.com --low-rate 10 --high-rate 50 --rate-step 10 --output-file my_load_test.html 
 
 == INSTALL:
 
 * Get httperf installed
 
-You can run 'httperf -h' to see if it is successfully installed and in your PATH.
-
+* * You can run 'httperf -h' to see if it is successfully installed and in your PATH.
 
 * Get autograph installed
 
-Run 'sudo gem install autograph'
+* * Run 'sudo gem install autograph'
 
-Run 'autograph -h' to check that it is successfully installed.
+* * Run 'autograph -h' to check that it is successfully installed.
 
 == THANKS:
 
