@@ -10,7 +10,7 @@ class TestHtmlReport < Test::Unit::TestCase
   def test_requires_params
     error = nil
     begin
-      Autograph::HtmlReport.new({})
+      HtmlReport.new({})
     rescue => e
       error = e
     end
@@ -18,12 +18,12 @@ class TestHtmlReport < Test::Unit::TestCase
   end
   
   def test_uses_defined_output_file
-    output_file = Autograph::HtmlReport.determine_output_file('file.txt', nil)
+    output_file = HtmlReport.determine_output_file('file.txt', nil)
     assert_equal(output_file, 'file.txt')
   end
   
   def test_uses_defined_output_dir
-    output_file = Autograph::HtmlReport.determine_output_file(nil, '/opt')
+    output_file = HtmlReport.determine_output_file(nil, '/opt')
     assert_equal(output_file, '/opt/load_test.html')
   end
   
@@ -31,7 +31,7 @@ class TestHtmlReport < Test::Unit::TestCase
     File.expects(:exist?).with('./load_test.html').returns(true)
     File.expects(:exist?).with('./load_test_1.html').returns(true)
     File.expects(:exist?).with('./load_test_2.html').returns(false)
-    output_file = Autograph::HtmlReport.determine_output_file(nil, '.')
+    output_file = HtmlReport.determine_output_file(nil, '.')
     assert_equal(output_file, './load_test_2.html')
   end
 
