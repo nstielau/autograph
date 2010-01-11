@@ -17,5 +17,9 @@ tmtags
 coverage
 rdoc
 pkg
+webgen*
 
 ## PROJECT::SPECIFIC
+autograph.gemspec
+load_test*
+eapis*
