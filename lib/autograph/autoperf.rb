@@ -1,7 +1,8 @@
 class AutoPerf
   
   def initialize(opts = {})
-    
+    @reports = {}
+    @graphs = {}
     @conf = {'httperf_timeout' => 20, 
              'httperf_num-call'  => 1, 
              'httperf_num-conns' => 100, 
@@ -22,6 +23,7 @@ class AutoPerf
              'output_dir' => './'
              }.merge(opts)
     
+    # This is a little too much 'magic'
     if @conf['httperf_wsesslog']
       puts "Using httperf_wsesslog"
       @conf.delete("httperf_num-call")
@@ -29,8 +31,6 @@ class AutoPerf
       @conf["httperf_add-header"] = "'Content-Type: application/x-www-form-urlencoded\\n'"
       # TODO: Add AcceptEncoding: gzip,deflate option
     end
-    
-    @conf['uris'] = @conf['uris'].uniq
 
     if opts['verbose']
       puts
@@ -44,9 +44,6 @@ class AutoPerf
   
   
   def run
-    @reports = {}
-    @graphs = {}
-
     if @conf['use_test_data']
       load_test_data()
     else
@@ -106,7 +103,7 @@ class AutoPerf
   end
   
   def run_tests
-    @conf['uris'].each do |uri|
+    @conf['uris'].uniq.each do |uri|
       @reports[uri] = vary_rate('httperf_uri' => uri)
     end
     

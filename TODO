@@ -12,7 +12,7 @@
 # Flag maxes
 # Set report overview y-axis to the max request rate
 
-# Pass httperf args
+# Pass-through httperf args
 # Pick output format
 # Pick graph types
 # take a txt file for the urls
