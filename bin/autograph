@@ -58,7 +58,7 @@ opt_parse_opts = OptionParser.new do |opts|
     command_parts << "--timeout #{opt}"
   end
   
-  opts.on("--num-call NUMCALLS", Integer, "The number of calls to make for each connection in the test") do |opt|
+  opts.on("--num-call NUMCALLS", Integer, "The number of calls to make for each connection in the test (defaults to one).") do |opt|
     options['httperf_num-call'] = opt
     command_parts << "--num-call #{opt}"
   end
@@ -68,10 +68,10 @@ opt_parse_opts = OptionParser.new do |opts|
     command_parts << "--num-conns #{opt}"
   end
   
-  opts.on("--rate RATE", Integer, "The rate at which to make requests") do |opt|
-    options['httperf_rate'] = opt
-    command_parts << "--rate #{opt}"
-  end
+  # opts.on("--rate RATE", Integer, "The rate at which to make requests") do |opt|
+  #   options['httperf_rate'] = opt
+  #   command_parts << "--rate #{opt}"
+  # end
   
   opts.on("--low-rate LOWRATE", Integer, "The starting rate") do |opt|
     options['low_rate'] = opt
