@@ -1,4 +1,4 @@
-require 'gchart'
+require 'scruffy'
 
 class ScruffyRenderer < BaseRenderer
   
@@ -24,7 +24,7 @@ private
     
     @file_name = format_file_name("request_graph_#{path}.svg")
     
-    graph.render :to => file_name, :min_value => 0, :max_value => find_max_y_value
+    graph.render :to => @file_name, :min_value => 0, :max_value => find_max_y_value
     
     graph
   end
