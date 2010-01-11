@@ -40,10 +40,10 @@ opt_parse_opts = OptionParser.new do |opts|
     command_parts << "--notes '#{opt}'"
   end
   
-  opts.on("--average", "Run a round-robin test of all URIs") do
-    options["average"] = true;
-    command_parts << "--average"
-  end
+  # opts.on("--average", "Run a round-robin test of all URIs") do
+  #   options["average"] = true;
+  #   command_parts << "--average"
+  # end
   
   opts.on("--test", "Do not run benchmarks. Use test data to generate reports.") do |opt|
     options['use_test_data'] = true
