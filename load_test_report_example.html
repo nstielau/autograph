@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Report for google.com</title>
+  <style type="text/css">
+  body,
+  html {
+    margin:0;
+    padding:0;
+    color:#000;
+  }
+  body {
+    min-width:950px;
+  }
+  #wrap {
+    margin:0 auto;
+    width:950px;
+  }
+  #header h1 {
+      padding:5px;
+      margin:0;
+      text-align: center;
+    }
+  #header h3 {
+    margin: 0;
+  }
+  #nav {
+
+    padding:5px;
+  }
+  #nav ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  #nav li{
+    display:inline;
+    margin:0;
+    padding:0;
+  }
+  #main {
+    float:right;
+    width:700px;
+  }
+  #main h2, #main h3, #main p {
+    padding:0 10px;
+    }
+  #sidebar {
+    float:left;
+    width:240px;
+  }
+  #sidebar ul {
+    margin-bottom:0;
+    }
+  #sidebar h3, #sidebar p {
+  padding:0 10px 0 0;
+  }
+  #footer {
+    clear:both;
+  }
+  #footer p {
+    padding:5px;
+    margin:0;
+    }
+    
+  div.report {
+    background: #FFFFFF;
+  }
+  </style>
+  <script type="text/javascript"``>
+    function hide_reports() {
+      var reports = document.getElementsByClassName('report');
+      for (var i=0; i < reports.length; i++) {
+        reports[i].style.display = 'none';
+      }
+    }
+    
+    function show_report(uri) {
+      hide_reports();
+      document.getElementById(uri).style.display = '';
+    }
+    
+    function uri_change_handler(uri) {
+      var page_select = document.getElementById('pages');
+      show_report(page_select.value);
+    }
+  </script>
+
+</head>
+<body>
+<div id="wrap">
+  <div id="header">
+    <h1>Load testing report</h1>
+    <h3>Date: Sun Jan 10 23:52:02 -0800 2010</h3>
+    <h3>Host: google.com</h3>
+    <h3>Page: 
+      <select id="pages" onchange="uri_change_handler()">
+        <option value='overview'>Overview</option>
+        
+          <option value='page_/'>/</option>
+        
+      </select>
+    </h3>
+    
+  </div>
+  <div id="nav">
+
+  </div>
+  <div id="sidebar">
+    <div style="display:none">
+      <h3>Tested Pages</h3>
+      <ul>
+        <li><a href="#" onclick="show_report('overview');" title="Overview">Overview</a></li>
+        
+        <li><a href="#" onclick="show_report('page_/');" title="/">/</a></li>
+        
+      </ul>
+    </div>
+    
+    <h3>Info</h3>
+    <ul>
+      <li><a href="#" onclick="show_report('graph_discussion');" title="Discussion">Discussion</a></li>
+    </ul>
+
+  </div>
+  <div id="main">
+    <h2>Report Detail</h2>
+    
+<div id="overview" class='report'>
+<img src="http://chart.apis.google.com/chart?chxs=0,000000%7C1,000000&chg=100,20,1,5&chf=bg,s,f4f4f4&chxt=x,y&chdl=Max%20Request%20Rate%20for%20'/'&chm=&chs=600x300&chxl=0:%7C0%7C0.0%7C1:%7C0%7C2%7C4%7C6%7C8%7C10%7C12%7C14%7C16%7C18%7C20%7C22&cht=bvg&chma=20,20,20,30%7C80,20&chtt=Max+Achieved+Connection+Rate&chco=000000&chdlp=bv&chbh=a,20,20&chd=e:.."/>
+</div>
+
+<div id="graph_discussion" class='report' style="display:none;">
+Discussion on what these graphs mean.
+
+• Increase concurrent connections, and see at which point your app will no longer serve at the demanded request rate
+• Find which pages are heavier/lighter than others
+• Replay a log (with a little work)
+
+• Actually hits your app with load, doesn't just extrapolate out from a few data points
+• Start broad and zero in on connection limits
+• Run from a server, not your laptop
+</div>
+          
+    
+      <div id="page_/" class='report' style="display:none;">
+        <p>Report for http://google.com/</p>
+        
+        <img src="http://chart.apis.google.com/chart?chxs=0,000000%7C1,000000&chg=20,20,1,5&chf=bg,s,f4f4f4&chxt=x,y&chdl=Requests%20for%20'/'&chm=o,0066FF,0,-1.0,6&chs=600x300&chxl=0:%7C0%7C5.0%7C10.0%7C15.0%7C20.0%7C25.0%7C1:%7C0%7C2%7C4%7C6%7C8%7C10%7C12%7C14%7C16%7C18%7C20%7C22&cht=lc&chma=20,20,20,30%7C80,20&chtt=Demanded+vs.+Achieved+Request+Rate+(r/s)&chco=000000&chdlp=bv&chd=e:PFdApP1e.."/>
+        
+        <img src="http://chart.apis.google.com/chart?chxs=0,000000%7C1,000000&chg=20,20,1,5&chf=bg,s,f4f4f4&chxt=x,y&chdl=Requests%20for%20'/'&chm=o,0066FF,0,-1.0,6&chs=600x300&chxl=0:%7C0%7C5.0%7C10.0%7C15.0%7C20.0%7C25.0%7C1:%7C0%7C5%7C10%7C15%7C20%7C25%7C30%7C35%7C40%7C45%7C50%7C55&cht=lc&chma=20,20,20,30%7C80,20&chtt=Demanded+Request+Rate+(r/s)+vs.+Response+Time&chco=000000&chdlp=bv&chd=e:8t9Q..-I8f"/>
+        
+<pre>
++-----------------------------------------------------------------------------+
+| rate | conn/s | req/s | replies/s avg | errors | net io (KB/s) | reply time |
++-----------------------------------------------------------------------------+
+|    5 | 5.3    | 5.3   | 0.0           | 0      | 2.9           | 55.6       |
+|   10 | 10.2   | 10.2  | 0.0           | 0      | 5.6           | 56.1       |
+|   15 | 14.5   | 14.5  | 0.0           | 0      | 8.0           | 58.6       |
+|   20 | 18.8   | 18.8  | 0.0           | 0      | 10.3          | 56.9       |
+|   25 | 22.5   | 22.5  | 0.0           | 0      | 12.3          | 55.4       |
++-----------------------------------------------------------------------------+
+
+</pre>
+      </div>
+    
+  </div>
+  <div id="footer" align="center">
+    <p>Generated at Sun Jan 10 23:52:02 -0800 2010</p>
+    <div>
+    <p><a onclick="document.getElementById('command_container').style.display = 'block';">Show Command<a/></p>
+    <div id="command_container" style="display:none">
+      <pre></pre>
+    </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
