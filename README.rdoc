@@ -6,6 +6,10 @@ Autograph drives httperf, varying the request rate and graphing the output.  Thi
 
 Can work with SOAP.
 
+== NOTES:
+
+A note on stats, from Zed Shaw: http://zedshaw.com/essays/programmer_stats.html
+
 == PROBLEMS:
 
 * No 'AcceptEncoding' support
