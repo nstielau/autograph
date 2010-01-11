@@ -20,14 +20,42 @@ Can work with SOAP.
 == INSTALL:
 
 * Get httperf installed
+* Download project and run 'rake build install'
 
-* * You can run 'httperf -h' to see if it is successfully installed and in your PATH.
+  nick-stielaus-computer-3:autograph nick$ httperf -h
+  Usage: httperf [-hdvV] [--add-header S] [--burst-length N] [--client N/N]
+    [--close-with-reset] [--debug N] [--failure-status N]
+    [--help] [--hog] [--http-version S] [--max-connections N]
+    [--max-piped-calls N] [--method S] [--no-host-hdr]
+    [--num-calls N] [--num-conns N] [--period [d|u|e]T1[,T2]]
+    [--port N] [--print-reply [header|body]] [--print-request [header|body]]
+    [--rate X] [--recv-buffer N] [--retry-on-failure] [--send-buffer N]
+    [--server S] [--server-name S] [--session-cookies]
+    [--ssl] [--ssl-ciphers L] [--ssl-no-reuse]
+    [--think-timeout X] [--timeout X] [--uri S] [--verbose] [--version]
+    [--wlog y|n,file] [--wsess N,N,X] [--wsesslog N,X,file]
+    [--wset N,X]
+  nick-stielaus-computer-3:autograph nick$ autograph
+  Usage: autograph [options]
+          --host HOST                  The host to load test
+          --port PORT                  The port to load test
+          --uris PATH,PATH             A comma separated list of pages to cycle through
+          --output-file PATH           Specify the file to output to.
+          --output-dir PATH            Specify a directory to write output files to.
+          --notes NOTES                Notes to be written to the report.
+          --test                       Do not run benchmarks. Use test data to generate reports.
+  Httperf Knobs:
+          --timeout SECONDS            The length in seconds before a request is marked as errored
+          --num-call NUMCALLS          The number of calls to make for each connection in the test (defaults to one).
+          --num-conns NUMCONNS         The number of connections to make for each test
+          --low-rate LOWRATE           The starting rate
+          --high-rate HIGHRATE         The highest rate at which to perform a test
+          --rate-step RATESTEP         The ammount at which to increment the rate for each interation of the test
+          --wsesslog PATH              Path to the wsesslog file.
+  Common options:
+      -h, --help                       Displays this help info
+      -v, --verbose                    Verbose output
 
-* Get autograph installed
-
-* * Run 'sudo gem install autograph'
-
-* * Run 'autograph -h' to check that it is successfully installed.
 
 == THANKS:
 
