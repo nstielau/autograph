@@ -88,10 +88,10 @@ opt_parse_opts = OptionParser.new do |opts|
     command_parts << "--rate-step #{opt}"
   end
     
-  opts.on("--wlog PATH", String, "A file a ASCII nul terminated pages to cycle through") do |opt|
-    options['httperf_wlog'] = "y,#{opt}";
-    command_parts << "--wlog #{opt}"
-  end
+  # opts.on("--wlog PATH", String, "A file a ASCII nul terminated pages to cycle through") do |opt|
+  #   options['httperf_wlog'] = "y,#{opt}";
+  #   command_parts << "--wlog #{opt}"
+  # end
   
   opts.on("--wsesslog PATH", "Path to the wsesslog file.") do |opt|
     options['httperf_wsesslog'] = opt
