@@ -1,5 +1,5 @@
-
 class AutoPerf
+  
   def initialize(opts = {})
     
     @conf = {'httperf_timeout' => 20, 
@@ -159,11 +159,7 @@ class AutoPerf
         graph_2.add_series(avg_response_time)
       end
       
-      response_time = GraphSeries.new
-      response_time.type = :line
-      response_time.x_values = report.column('rate')
-      response_time.y_values = report.column('reply time').map{|x| x.to_f}
-      response_time.label = "Requests for '#{uri}'"
+      response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Requests for '#{uri}'")
       graph_2.add_series(response_time)
 
       @graphs[uri] << graph_2.to_html
@@ -177,15 +173,10 @@ class AutoPerf
     
     @reports.keys.each do |key|
       max = @reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
-      max_request_rate = GraphSeries.new
-      max_request_rate.type = :bar
-      max_request_rate.x_values = [key]
-      max_request_rate.y_values = [max]
-      max_request_rate.label = "Max Request Rate for '#{key}'"
+      max_request_rate = GraphSeries.new(:bar, [key], [max], "Max Request Rate for '#{key}'")
       graph_3.add_series(max_request_rate)
     end
     @summary_graph = graph_3
-    
   end
   
   
@@ -210,12 +201,14 @@ class AutoPerf
   def generate_html_report
     HtmlReport.new({
       'host' => @conf['host'],
-      'title' => "Report for #{host}",
+      'title' => "Report for #{@conf['host']}",
+      'command' => @conf['command_run'],
       'uris' => @conf['uris'],
       'date' => Time.now,
       'reports' => @reports,
       'graphs' => @graphs,
-      'command_run' => @conf["command_run"],
+      'output_file' => @conf["output_file"],
+      'output_dir' => @conf["output_dir"],
       'summary_graph' => @summary_graph.to_html,
       'notes' => @conf["notes"]
     })
