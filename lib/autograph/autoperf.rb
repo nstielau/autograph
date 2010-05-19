@@ -1,40 +1,10 @@
 class AutoPerf
+  COLUMN_NAMES = ['rate', 'conn/s', 'req/s', 'replies/s avg', 'errors', 'net io (KB/s)', 'reply time']
+
   def initialize(opts = {})
-    conf = {'httperf_timeout' => 20,
-             'httperf_num-call'  => 1,
-             'httperf_num-conns' => 100,
-             'httperf_rate' => 5,
-             'port' => 80,
-             'uri' => '/',
-             'low_conns'  => 50,
-             'high_conns' => 550,
-             'conns_step' => 100,
-             'low_rate'  => 5,
-             'high_rate' => 250,
-             'rate_step' => 20,
-             'uris' => ['/'],
-             'use_test_data' => false,
-             'batik-rasterizer-jar' => '/opt/batik/batik-rasterizer.jar',
-             'graph_renderer' => 'GChartRenderer',
-             'average' => false,
-             'output_dir' => './'
-             }.merge(opts)
+    conf = Configuration.new(opts)
 
-    # This is a little too much 'magic'
-    if conf['httperf_wsesslog']
-      puts "Using httperf_wsesslog"
-      conf.delete("httperf_num-call")
-      conf.delete("httperf_num-conns")
-      conf["httperf_add-header"] = "'Content-Type: application/x-www-form-urlencoded\\n'"
-      # TODO: Add AcceptEncoding: gzip,deflate option
-    end
-
-    if opts['verbose']
-      puts
-      puts "Use these parameters:"
-      conf.sort.each{ |k, v| puts "  #{k}=#{v}"}
-      puts
-    end
+    puts configuration.pretty_print if opts['verbose']
 
     if conf['use_test_data']
       conf['uris'] = ['/', '/page1', '/page2']
@@ -43,10 +13,9 @@ class AutoPerf
       @reports = run_tests(conf)
     end
 
-    @graphs = generate_graphs(@reports, conf)
-    HtmlReport.new(@reports, @graphs, conf)
+    graphs = BaseRenderer.generate_graphs(@reports, conf)
+    HtmlReport.new(@reports, graphs, conf)
   end
-
 
   def benchmark(conf)
     raise "You must specify a host." if conf['host'].nil?
@@ -82,8 +51,7 @@ class AutoPerf
   def vary_rate(uri, configuration)
     puts "Config is #{configuration.inspect}" if configuration['verbose']
     results = {}
-    report = Table(:column_names => ['rate', 'conn/s', 'req/s', 'replies/s avg',
-                                     'errors', 'net io (KB/s)', 'reply time'])
+    report = Table(:column_names => COLUMN_NAMES)
 
     (configuration['low_rate']..configuration['high_rate']).step(configuration['rate_step']) do |rate|
       results[rate] = benchmark(configuration.merge({'httperf_rate' => rate, 'httperf_uri' => uri}))
@@ -120,82 +88,18 @@ class AutoPerf
     reports
   end
 
-  def generate_graphs(reports, configuration)
-    graphs = {}
-    reports.each do |uri, report|
-      graphs[uri] = []
-
-      puts "For '#{uri}' the values are #{report.column('reply time').join(', ')}" if configuration['verbose']
-      graph_1 = graph_renderer_class(configuration).new
-      graph_1.title = "Demanded vs. Achieved Request Rate (r/s)"
-      graph_1.path = uri
-      graph_1.width  = 600
-      graph_1.height = 300
-
-      if reports['Avg']
-        avg_request_rate = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('conn/s').map{|x| x.to_f}, "Avg")
-        graph_1.add_series(avg_request_rate)
-      end
-
-      request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Requests for '#{uri}'")
-      graph_1.add_series(request_rate)
-
-      graphs[uri] << graph_1.to_html
-
-      graph_2 = graph_renderer_class(configuration).new
-      graph_2.path = uri
-      graph_2.title = "Demanded Request Rate (r/s) vs. Response Time"
-      graph_2.width  = 600
-      graph_2.height = 300
-
-      if reports['Avg']
-        avg_response_time = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('reply time').map{|x| x.to_f}, "Avg")
-        graph_2.add_series(avg_response_time)
-      end
-
-      response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Requests for '#{uri}'")
-      graph_2.add_series(response_time)
-
-      graphs[uri] << graph_2.to_html
-    end
-
-    graph_3 = graph_renderer_class(configuration).new
-    #graph_3.path = uri
-    graph_3.title = "Max Achieved Connection Rate"
-    graph_3.width  = 600
-    graph_3.height = 300
-
-    reports.keys.each do |key|
-      max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
-      max_request_rate = GraphSeries.new(:bar, [key], [max], "Max Request Rate for '#{key}'")
-      graph_3.add_series(max_request_rate)
-    end
-    graphs['summary_graph'] = graph_3
-    graphs
-  end
-
-
-#private
-
   def load_test_data(configuration)
     reports = {}
-    defaults = {:column_names => ['rate', 'conn/s', 'req/s', 'replies/s avg', 'errors', 'net io (KB/s)', 'reply time']}
     configuration['uris'].each do |uri|
-      reports[uri] = ::Ruport::Data::Table.new(defaults)
+      reports[uri] = ::Ruport::Data::Table.new(:column_names => COLUMN_NAMES)
       times = [130.7, 132.7, 180.4, 438.3, 591.9, 686.9, 739.4, 661.3, 727.1, 546.5, 711.1, 893.7, 870.0]
       conns = [5.0, 21.5, 28.8, 30.6, 26.3, 24.7, 23.0, 25.8, 28.0, 27.4, 27.9, 22.2, 22.7]
       1.upto(10) do |i|
         reports[uri] << {'rate' => i*10 - 10,
-                          'conn/s' => conns[i % conns.length  ],
-                          'reply time' => times[i % times.length]}
+                         'conn/s' => conns[i % conns.length],
+                         'reply time' => times[i % times.length]}
       end
     end
     reports
   end
-
-
-  def graph_renderer_class(configuration)
-    Object.const_get(configuration['graph_renderer'].to_s)
-  end
-
 end

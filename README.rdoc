@@ -19,11 +19,11 @@ A note on stats, from Zed Shaw: http://zedshaw.com/essays/programmer_stats.html
 
   autograph --host example.com --low-rate 5 --high-rate 25 --rate-step 5 --num-conns 25
 
-  autograph --host example.com --low-rate 10 --high-rate 50 --rate-step 10 --output-file my_load_test.html 
+  autograph --host example.com --low-rate 10 --high-rate 50 --rate-step 10 --output-file my_load_test.html
 
 == INSTALL:
 
-* Get httperf installed
+* Get httperf installed ('brew install httperf' if you've got homebrew installed)
 * Download project and run 'rake build install'
 
   nick-stielaus-computer-3:autograph nick$ httperf -h
@@ -63,7 +63,7 @@ A note on stats, from Zed Shaw: http://zedshaw.com/essays/programmer_stats.html
 
 == THANKS:
 
-Thanks to 
+Thanks to
 
 Julian T J Midgley
 Autobench

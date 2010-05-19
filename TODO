@@ -6,7 +6,7 @@
 # Deal with AcceptEncoding, add options
 
 # Factor out outputs types into a report_renderers dir
-# Control verbose output
+# Control verbose output with a Logger, instead of just going to STDOUT
 
 # Don't include overview for one page...
 # Flag maxes
