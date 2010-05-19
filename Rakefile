@@ -10,7 +10,6 @@ begin
     gem.email = "nick.stielau@gmail.com"
     gem.homepage = "http://github.com/nstielau/autograph"
     gem.authors = ["Nick Stielau"]
-    gem.add_runtime_dependency 'hashie',  '= 0.2.0'
     gem.add_runtime_dependency 'ruport',  '= 1.6.3'
     gem.add_runtime_dependency 'scruffy', '= 0.2.6'
     gem.add_runtime_dependency 'gchart',  '= 1.0.0'
