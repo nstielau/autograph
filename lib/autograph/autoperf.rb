@@ -1,8 +1,5 @@
 class AutoPerf
-
   def initialize(opts = {})
-    @reports = {}
-    @graphs = {}
     conf = {'httperf_timeout' => 20,
              'httperf_num-call'  => 1,
              'httperf_num-conns' => 100,
