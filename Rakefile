@@ -10,9 +10,10 @@ begin
     gem.email = "nick.stielau@gmail.com"
     gem.homepage = "http://github.com/nstielau/autograph"
     gem.authors = ["Nick Stielau"]
-    gem.add_runtime_dependency 'ruport', '>= 1.5.0'
-    gem.add_runtime_dependency 'scruffy', '>= 0.2.6'
-    gem.add_runtime_dependency 'gchart', '>= 1.0.0'
+    gem.add_runtime_dependency 'hashie',  '= 0.2.0'
+    gem.add_runtime_dependency 'ruport',  '= 1.5.0'
+    gem.add_runtime_dependency 'scruffy', '= 0.2.6'
+    gem.add_runtime_dependency 'gchart',  '= 1.0.0'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
