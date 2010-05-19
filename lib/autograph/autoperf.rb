@@ -3,7 +3,7 @@ class AutoPerf
   def initialize(opts = {})
     @reports = {}
     @graphs = {}
-    @conf = {'httperf_timeout' => 20,
+    conf = {'httperf_timeout' => 20,
              'httperf_num-call'  => 1,
              'httperf_num-conns' => 100,
              'httperf_rate' => 5,
@@ -24,39 +24,35 @@ class AutoPerf
              }.merge(opts)
 
     # This is a little too much 'magic'
-    if @conf['httperf_wsesslog']
+    if conf['httperf_wsesslog']
       puts "Using httperf_wsesslog"
-      @conf.delete("httperf_num-call")
-      @conf.delete("httperf_num-conns")
-      @conf["httperf_add-header"] = "'Content-Type: application/x-www-form-urlencoded\\n'"
+      conf.delete("httperf_num-call")
+      conf.delete("httperf_num-conns")
+      conf["httperf_add-header"] = "'Content-Type: application/x-www-form-urlencoded\\n'"
       # TODO: Add AcceptEncoding: gzip,deflate option
     end
 
     if opts['verbose']
       puts
       puts "Use these parameters:"
-      @conf.sort.each{ |k, v| puts "  #{k}=#{v}"}
+      conf.sort.each{ |k, v| puts "  #{k}=#{v}"}
       puts
     end
 
-    run()
-  end
-
-
-  def run
-    if @conf['use_test_data']
-      @conf['uris'] = ['/', '/page1', '/page2']
-      @reports = load_test_data(@conf)
+    if conf['use_test_data']
+      conf['uris'] = ['/', '/page1', '/page2']
+      @reports = load_test_data(conf)
     else
-      @reports = run_tests(@conf)
+      @reports = run_tests(conf)
     end
 
-    @graphs = generate_graphs(@reports, @conf)
-    HtmlReport.new(@reports, @graphs, @conf)
+    @graphs = generate_graphs(@reports, conf)
+    HtmlReport.new(@reports, @graphs, conf)
   end
 
 
   def benchmark(conf)
+    raise "You must specify a host." if conf['host'].nil?
     httperf_opt = conf.keys.grep(/httperf/).collect {|k| "--#{k.gsub(/httperf_/, '')} #{conf[k]}"}.join(" ")
     httperf_cmd = "httperf --hog --server #{conf['host']} --port #{conf['port']} #{httperf_opt}"
 
@@ -200,22 +196,6 @@ class AutoPerf
     reports
   end
 
-
-  def generate_html_report(reports, graphs, configuration)
-    # HtmlReport.new({
-    #   'host' => configuration['host'],
-    #   'title' => "Report for #{configuration['host']}",
-    #   'command' => configuration['command_run'],
-    #   'uris' => configuration['uris'],
-    #   'date' => Time.now,
-    #   'reports' => reports,
-    #   'graphs' => graphs,
-    #   'output_file' => configuration["output_file"],
-    #   'output_dir' => configuration["output_dir"],
-    #   'summary_graph' => graphs['summary_graph'],
-    #   'notes' => configuration["notes"]
-    # })
-  end
 
   def graph_renderer_class(configuration)
     Object.const_get(configuration['graph_renderer'].to_s)
