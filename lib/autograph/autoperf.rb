@@ -1,13 +1,13 @@
 class AutoPerf
-  
+
   def initialize(opts = {})
     @reports = {}
     @graphs = {}
-    @conf = {'httperf_timeout' => 20, 
-             'httperf_num-call'  => 1, 
-             'httperf_num-conns' => 100, 
-             'httperf_rate' => 5, 
-             'port' => 80, 
+    @conf = {'httperf_timeout' => 20,
+             'httperf_num-call'  => 1,
+             'httperf_num-conns' => 100,
+             'httperf_rate' => 5,
+             'port' => 80,
              'uri' => '/',
              'low_conns'  => 50,
              'high_conns' => 550,
@@ -22,7 +22,7 @@ class AutoPerf
              'average' => false,
              'output_dir' => './'
              }.merge(opts)
-    
+
     # This is a little too much 'magic'
     if @conf['httperf_wsesslog']
       puts "Using httperf_wsesslog"
@@ -41,19 +41,20 @@ class AutoPerf
 
     run()
   end
-  
-  
+
+
   def run
     if @conf['use_test_data']
-      load_test_data()
+      @conf['uris'] = ['/', '/page1', '/page2']
+      @reports = load_test_data(@conf)
     else
-      run_tests()
+      @reports = run_tests(@conf)
     end
-    
-    generate_graphs()
-    generate_html_report()
+
+    @graphs = generate_graphs(@reports, @conf)
+    HtmlReport.new(@reports, @graphs, @conf)
   end
-  
+
 
   def benchmark(conf)
     httperf_opt = conf.keys.grep(/httperf/).collect {|k| "--#{k.gsub(/httperf_/, '')} #{conf[k]}"}.join(" ")
@@ -85,134 +86,139 @@ class AutoPerf
     return res
   end
 
-  def vary_rate(override_opts = {})
-    puts "Overrides are #{override_opts.inspect}" if @conf['verbose']
+  def vary_rate(uri, configuration)
+    puts "Config is #{configuration.inspect}" if configuration['verbose']
     results = {}
     report = Table(:column_names => ['rate', 'conn/s', 'req/s', 'replies/s avg',
                                      'errors', 'net io (KB/s)', 'reply time'])
 
-    (@conf['low_rate']..@conf['high_rate']).step(@conf['rate_step']) do |rate|
-      results[rate] = benchmark(@conf.merge({'httperf_rate' => rate}.merge(override_opts)))
+    (configuration['low_rate']..configuration['high_rate']).step(configuration['rate_step']) do |rate|
+      results[rate] = benchmark(configuration.merge({'httperf_rate' => rate, 'httperf_uri' => uri}))
       report << results[rate].merge({'rate' => rate})
 
       puts report.to_s
       puts results[rate]['output'] if results[rate]['errors'].to_i > 0
     end
-    
+
     report
   end
-  
-  def run_tests
-    @conf['uris'].uniq.each do |uri|
-      @reports[uri] = vary_rate('httperf_uri' => uri)
+
+  def run_tests(configuration)
+    reports = {}
+    configuration['uris'].uniq.each do |uri|
+      reports[uri] = vary_rate(uri, configuration)
     end
-    
+
     # TODO: Factor out to create_httperf_wlog
-    if !@conf['httperf_wlog'] && @conf['uris'].length > 1 && @conf['average']
+    if !configuration['httperf_wlog'] && configuration['uris'].length > 1 && configuration['average']
       replay_log = File.open('tmp_replay_log', 'w')
       path = replay_log.path
-      puts "Tmp replay log is at #{path}" if @conf['verbose']
+      puts "Tmp replay log is at #{path}" if configuration['verbose']
       index = 1
-      @conf['uris'].each do |uri|
+      configuration['uris'].each do |uri|
         replay_log.print uri
-        replay_log.putc 0 if index < @conf['uris'].length # ASCII NUL Terminate join paths
+        replay_log.putc 0 if index < configuration['uris'].length # ASCII NUL Terminate join paths
         index = index + 1
       end
       replay_log.close
-      puts "Replay log is at #{path}" if @conf['verbose']
-      @reports["Avg"] = vary_rate('httperf_wlog' => "y,#{path}")
+      puts "Replay log is at #{path}" if configuration['verbose']
+      reports["Avg"] = vary_rate('httperf_wlog' => "y,#{path}")
     end
+    reports
   end
-  
-  def generate_graphs
-    @reports.each do |uri, report| 
-      @graphs[uri] = []
-      
-      puts "For '#{uri}' the values are #{report.column('reply time').join(', ')}" if @conf['verbose']      
-      graph_1 = graph_renderer_class.new
+
+  def generate_graphs(reports, configuration)
+    graphs = {}
+    reports.each do |uri, report|
+      graphs[uri] = []
+
+      puts "For '#{uri}' the values are #{report.column('reply time').join(', ')}" if configuration['verbose']
+      graph_1 = graph_renderer_class(configuration).new
       graph_1.title = "Demanded vs. Achieved Request Rate (r/s)"
       graph_1.path = uri
       graph_1.width  = 600
       graph_1.height = 300
 
-      if @reports['Avg']
-        avg_request_rate = GraphSeries.new(:area, report.column('rate'), @reports['Avg'].column('conn/s').map{|x| x.to_f}, "Avg")
+      if reports['Avg']
+        avg_request_rate = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('conn/s').map{|x| x.to_f}, "Avg")
         graph_1.add_series(avg_request_rate)
       end
-      
+
       request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Requests for '#{uri}'")
       graph_1.add_series(request_rate)
-      
-      @graphs[uri] << graph_1.to_html
 
-      graph_2 = graph_renderer_class.new
+      graphs[uri] << graph_1.to_html
+
+      graph_2 = graph_renderer_class(configuration).new
       graph_2.path = uri
       graph_2.title = "Demanded Request Rate (r/s) vs. Response Time"
       graph_2.width  = 600
       graph_2.height = 300
-      
-      if @reports['Avg']
-        avg_response_time = GraphSeries.new(:area, report.column('rate'), @reports['Avg'].column('reply time').map{|x| x.to_f}, "Avg")
+
+      if reports['Avg']
+        avg_response_time = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('reply time').map{|x| x.to_f}, "Avg")
         graph_2.add_series(avg_response_time)
       end
-      
+
       response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Requests for '#{uri}'")
       graph_2.add_series(response_time)
 
-      @graphs[uri] << graph_2.to_html
+      graphs[uri] << graph_2.to_html
     end
-    
-    graph_3 = graph_renderer_class.new
+
+    graph_3 = graph_renderer_class(configuration).new
     #graph_3.path = uri
     graph_3.title = "Max Achieved Connection Rate"
     graph_3.width  = 600
-    graph_3.height = 300  
-    
-    @reports.keys.each do |key|
-      max = @reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
+    graph_3.height = 300
+
+    reports.keys.each do |key|
+      max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
       max_request_rate = GraphSeries.new(:bar, [key], [max], "Max Request Rate for '#{key}'")
       graph_3.add_series(max_request_rate)
     end
-    @summary_graph = graph_3
+    graphs['summary_graph'] = graph_3
+    graphs
   end
-  
-  
+
+
 #private
 
-  def load_test_data
+  def load_test_data(configuration)
+    reports = {}
     defaults = {:column_names => ['rate', 'conn/s', 'req/s', 'replies/s avg', 'errors', 'net io (KB/s)', 'reply time']}
-    @conf['uris'] = ['/', '/page1', '/page2']
-    @conf['uris'].each do |uri|
-      @reports[uri] = ::Ruport::Data::Table.new(defaults)
+    configuration['uris'].each do |uri|
+      reports[uri] = ::Ruport::Data::Table.new(defaults)
       times = [130.7, 132.7, 180.4, 438.3, 591.9, 686.9, 739.4, 661.3, 727.1, 546.5, 711.1, 893.7, 870.0]
       conns = [5.0, 21.5, 28.8, 30.6, 26.3, 24.7, 23.0, 25.8, 28.0, 27.4, 27.9, 22.2, 22.7]
       1.upto(10) do |i|
-        @reports[uri] << {'rate' => i*10 - 10, 
-                          'conn/s' => conns[rand(conns.length)], 
-                          'reply time' => times[rand(conns.length)]}
+        reports[uri] << {'rate' => i*10 - 10,
+                          'conn/s' => conns[i % conns.length  ],
+                          'reply time' => times[i % times.length]}
       end
     end
+    reports
   end
 
 
-  def generate_html_report
-    HtmlReport.new({
-      'host' => @conf['host'],
-      'title' => "Report for #{@conf['host']}",
-      'command' => @conf['command_run'],
-      'uris' => @conf['uris'],
-      'date' => Time.now,
-      'reports' => @reports,
-      'graphs' => @graphs,
-      'output_file' => @conf["output_file"],
-      'output_dir' => @conf["output_dir"],
-      'summary_graph' => @summary_graph.to_html,
-      'notes' => @conf["notes"]
-    })
+  def generate_html_report(reports, graphs, configuration)
+    # HtmlReport.new({
+    #   'host' => configuration['host'],
+    #   'title' => "Report for #{configuration['host']}",
+    #   'command' => configuration['command_run'],
+    #   'uris' => configuration['uris'],
+    #   'date' => Time.now,
+    #   'reports' => reports,
+    #   'graphs' => graphs,
+    #   'output_file' => configuration["output_file"],
+    #   'output_dir' => configuration["output_dir"],
+    #   'summary_graph' => graphs['summary_graph'],
+    #   'notes' => configuration["notes"]
+    # })
   end
-  
-  def graph_renderer_class
-    Object.const_get(@conf['graph_renderer'].to_s)
+
+  def graph_renderer_class(configuration)
+    Object.const_get(configuration['graph_renderer'].to_s)
   end
-  
+
 end

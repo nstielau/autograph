@@ -1,25 +1,19 @@
 class HtmlReport
   require 'erb'
-  
-  def initialize(options)
-    %w(host uris command notes reports graphs summary_graph output_file output_dir).each do |k|
-      raise("Must specify '#{k}' in order to generate a report") unless options.key?(k)
-    end
-    
-    host = options['host']
-    title = "Report for #{host}"
-    uris = options['uris']
-    date = Time.now
-    reports = options['reports']
-    graphs = options['graphs']
-    command_run = options["command_run"]
-    summary_graph = options['summary_graph']
-    notes = options["notes"]
 
-    output_file = HtmlReport.determine_output_file(options['output_file'], options['output_dir'])
+  def initialize(reports, graphs, configuration)
+    date = Time.now
+    host = configuration['host']
+    title = "Report for #{host}"
+    uris = configuration['uris']
+    command_run = configuration["command_run"]
+    notes = configuration["notes"]
+    summary_graph = graphs['summary_graph']
+
+    output_file = HtmlReport.determine_output_file(configuration['output_file'], configuration['output_dir'])
 
     template = File.read(File.dirname(__FILE__) + '/report.html.erb')
-    result = ERB.new(template).result(binding).to_s 
+    result = ERB.new(template).result(binding).to_s
 
     File.open(output_file, "w") do |file|
       file.puts result

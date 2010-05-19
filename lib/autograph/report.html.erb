@@ -64,7 +64,7 @@
     padding:5px;
     margin:0;
     }
-    
+
   div.report {
     background: #FFFFFF;
   }
@@ -76,12 +76,12 @@
         reports[i].style.display = 'none';
       }
     }
-    
+
     function show_report(uri) {
       hide_reports();
       document.getElementById(uri).style.display = '';
     }
-    
+
     function uri_change_handler(uri) {
       var page_select = document.getElementById('pages');
       show_report(page_select.value);
@@ -95,7 +95,7 @@
     <h1>Load testing report</h1>
     <h3>Date: <%= date %></h3>
     <h3>Host: <%= host %></h3>
-    <h3>Page: 
+    <h3>Page:
       <select id="pages" onchange="uri_change_handler()">
         <option value='overview'>Overview</option>
         <% uris.each do |uri|%>
@@ -103,7 +103,7 @@
         <% end %>
       </select>
     </h3>
-    
+
   </div>
   <div id="nav">
 
@@ -130,9 +130,9 @@
   </div>
   <div id="main">
     <h2>Report Detail</h2>
-    
+
 <div id="overview" class='report'>
-<img src="<%= summary_graph %>"/>
+<img src="<%= summary_graph.to_html %>"/>
 </div>
 
 <div id="graph_discussion" class='report' style="display:none;">
@@ -146,7 +146,7 @@ Discussion on what these graphs mean.
 • Start broad and zero in on connection limits
 • Run from a server, not your laptop
 </div>
-          
+
     <% reports.each do |uri, report| %>
       <div id="page_<%= uri %>" class='report' style="display:none;">
         <p>Report for <%= "http://#{host}#{uri}" %></p>
