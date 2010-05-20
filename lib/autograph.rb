@@ -3,7 +3,6 @@ $:.unshift(File.dirname(__FILE__)) unless $:.include?(File.dirname(__FILE__)) ||
 require 'rubygems'
 require 'optparse'
 require 'ruport'
-require 'hashie'
 require 'pp'
 
 require 'autograph/autoperf'
