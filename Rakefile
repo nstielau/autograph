@@ -30,7 +30,7 @@ end
 
 
 task :install_local do
-  `sudo gem install --local ./pkg/autograph-0.1.2.gem --no-ri --no-rdoc`
+  `sudo gem install --local ./pkg/$(ls ./pkg | head -1) --no-ri --no-rdoc`
 end
 
 task :test => :check_dependencies
