@@ -97,9 +97,9 @@ HEADER_HTML
 
     // Callback function to show the tooltip
     function showTooltip(item) {
-      var contents = "<strong>" + item.datapoint[1] + "" + "</strong> at " + item.datapoint[0];
+      var contents = "(" + item.datapoint[1] + "," + item.datapoint[0] + ")";
       var x = item.pageX;
-      var y = item.pageY - 10 - 50;
+      var y = item.pageY - 10;
 
       var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
         padding: '5px',
