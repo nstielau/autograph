@@ -1,92 +1,50 @@
 class FlotRenderer < BaseRenderer
   def to_html
-    html = <<GRAPH_HTML
-    <div id="graph_#{path}"/>
-    <script id="source" language="javascript" type="text/javascript">
-    $(function () {
-        var d1 = [];
-        for (var i = 0; i < 14; i += 0.5)
-            d1.push([i, Math.sin(i)]);
+    data = []
+    graph_type = ''
+    if series[0].type.to_sym == :bar
+      graph_type = "bars"
+      series.each_with_index do |s, i|
+        data << "[#{i}, #{s.y_values[0]}]"
+      end
+    else
+      graph_type = "lines"
+      1.upto(series[0].x_values.size.to_i - 1) do |index|
+        data << "[#{series[0].x_values[index]}, #{series[0].y_values[index]}]"
+      end
+    end
 
-        $.plot($("#graph_#{path}"), [
+    html = <<GRAPH_HTML
+    <div style="with:600px;height:350px;" id="#{graph_name}"></div>
+    <script language="javascript" type="text/javascript">
+    //#{series.inspect}
+        $('.report').show();
+        $.plot($("##{graph_name}"), [
             {
-                data: d1,
-                lines: { show: true, fill: true }
+                data: [#{data.join(",")}],
+                #{graph_type}: { show: true, fill: true }
             }
         ]);
-    });
+        $('.report').hide();
+        show_report('overview');
     </script>
-
 GRAPH_HTML
     html
   end
 
+  def self.header_html
+    html = <<HEADER_HTML
+    <script type="text/javascript" src="http://127.0.0.1:1234/jquery.js"></script>
+    <script type="text/javascript" src="http://127.0.0.1:1234/jquery.flot.js"></script>
+HEADER_HTML
+  end
+
 private
-  def render_graph
-    chart_type = series[0].type.to_s
-    chart_type = 'line' if chart_type == 'area'
+  def format_file_name(desired_name)
+    desired_name.to_s.gsub("/","_").gsub("=","_").gsub("?","_")
+  end
 
-    chart = GChart.send(chart_type) do |g|
-
-      x_values = series[0].x_values
-      y_values = series[0].y_values
-
-      x_values = series.map{|s| s.x_values} if chart_type.to_sym == :bar
-
-      series_data = series.map{|s| s.y_values}
-
-      g.data   = series_data
-
-      # chg, grid lines
-      # chm data point makers
-      # chma, margins
-      # chm, flags  :chm => "fMax,FF0000,0,#{y_values.index(y_values.max)},15"
-      # cht, bvg (bar vertical grouped)
-      # chbh, bar spacing
-      # chdlp, legend on bottom, vertical
-
-      # TODO: Should case off of chart types
-
-      extras = {:chg => "#{100/(y_values.size)},20,1,5",
-                :chm => "o,0066FF,0,-1.0,6",
-                :chma => "20,20,20,30|80,20",
-                :chdlp => "bv"}
-
-      if chart_type.to_sym == :bar
-        extras = extras.merge({:chm => '', :chbh => 'a,20,20'})
-        # chm=N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f1*,000000,3,-1,11|N*f2*,FF0000,0,0,18
-        g.grouped = true
-      end
-
-      g.extras = extras
-
-      g.axis(:bottom) do |a|
-        a.labels          = [0] << x_values
-        a.text_color = :black
-      end
-
-      g.axis(:left) do |a|
-        interval = (y_values.max/10).to_i
-        interval = 1 if interval == 0
-        a.labels = (0..(y_values.max.to_i)).to_a.select{|y| y % interval == 0}
-        a.text_color = :black
-      end
-
-      if chart_type.to_sym == :bar
-        g.orientation = :vertical
-      end
-
-      colors = available_colors
-      g.colors = series.map{|s| colors.pop}
-
-      g.legend = series.map{|s| s.label.gsub("'", "")}
-
-      g.title = title
-
-      g.width  = width
-      g.height = height
-
-      g.entire_background = "f4f4f4"
-    end
+  def graph_name
+    @graph_name ||= "graph_#{format_file_name(path || 'overview')}_#{(rand * 100).to_i}"
   end
 end

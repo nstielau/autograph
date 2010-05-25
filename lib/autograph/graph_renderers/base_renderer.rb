@@ -5,6 +5,8 @@ class BaseRenderer
   attr :path, true
   attr :series
 
+  AVAILABLE_GRAPH_RENDERERS = %W(ScruffyRenderer GChartRenderer)
+
   def initialize
     @series = []
   end
@@ -19,6 +21,9 @@ class BaseRenderer
 
   def find_max_y_value
     series.map{|s| s.y_values.max}.max
+  end
+
+  def self.header_html
   end
 
   def self.generate_graphs(reports, configuration)
@@ -41,7 +46,7 @@ class BaseRenderer
       request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Requests for '#{uri}'")
       request_rate_graph.add_series(request_rate)
 
-      graphs[uri] << request_rate_graph.to_html
+      graphs[uri] << request_rate_graph
 
       response_time_graph = configuration.graph_renderer_class.new
       response_time_graph.path = uri
@@ -57,7 +62,7 @@ class BaseRenderer
       response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Requests for '#{uri}'")
       response_time_graph.add_series(response_time)
 
-      graphs[uri] << response_time_graph.to_html
+      graphs[uri] << response_time_graph
     end
 
     max_rate_graph = configuration.graph_renderer_class.new
@@ -70,6 +75,7 @@ class BaseRenderer
       max_request_rate = GraphSeries.new(:bar, [key], [max], "Max Request Rate for '#{key}'")
       max_rate_graph.add_series(max_request_rate)
     end
+
     graphs['summary_graph'] = max_rate_graph
     graphs
   end

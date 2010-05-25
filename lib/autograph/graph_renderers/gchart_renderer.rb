@@ -1,12 +1,12 @@
 require 'gchart'
 
 class GChartRenderer < BaseRenderer
-  
+
   def to_html
-    #"<img src='#{render_graph.to_url}'/>"
-    render_graph.to_url
+    render_graph
+    "<img src='#{render_graph.to_url}'/>"
   end
-  
+
 private
   def available_colors
     [:red, :yellow, :green, :blue, :black]
@@ -15,16 +15,16 @@ private
   def render_graph
     chart_type = series[0].type.to_s
     chart_type = 'line' if chart_type == 'area'
-    
+
     chart = GChart.send(chart_type) do |g|
 
       x_values = series[0].x_values
       y_values = series[0].y_values
 
       x_values = series.map{|s| s.x_values} if chart_type.to_sym == :bar
-      
+
       series_data = series.map{|s| s.y_values}
-    
+
       g.data   = series_data
 
       # chg, grid lines
@@ -41,9 +41,9 @@ private
                 :chm => "o,0066FF,0,-1.0,6",
                 :chma => "20,20,20,30|80,20",
                 :chdlp => "bv"}
-                  
-      if chart_type.to_sym == :bar    
-        extras = extras.merge({:chm => '', :chbh => 'a,20,20'}) 
+
+      if chart_type.to_sym == :bar
+        extras = extras.merge({:chm => '', :chbh => 'a,20,20'})
         # chm=N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f1*,000000,3,-1,11|N*f2*,FF0000,0,0,18
         g.grouped = true
       end
@@ -61,15 +61,15 @@ private
         a.labels = (0..(y_values.max.to_i)).to_a.select{|y| y % interval == 0}
         a.text_color = :black
       end
-      
+
       if chart_type.to_sym == :bar
-        g.orientation = :vertical 
-      end  
-        
+        g.orientation = :vertical
+      end
+
       colors = available_colors
       g.colors = series.map{|s| colors.pop}
 
-      g.legend = series.map{|s| s.label}
+      g.legend = series.map{|s| s.label.gsub("'", "")}
 
       g.title = title
 
