@@ -12,7 +12,7 @@ begin
     gem.authors = ["Nick Stielau"]
     gem.add_runtime_dependency 'builder',  '= 2.1.2'
     gem.add_runtime_dependency 'ruport',  '= 1.6.3'
-    gem.add_runtime_dependency 'scruffy', '= 0.2.6'
+    gem.add_runtime_dependency 'scruffy', '= 0.2.5'
     gem.add_runtime_dependency 'gchart',  '= 1.0.0'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -28,6 +28,10 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
+
+task :install_local do
+  `sudo gem install --local ./pkg/autograph-0.1.2.gem --no-ri --no-rdoc`
+end
 
 task :test => :check_dependencies
 task :default => :test
