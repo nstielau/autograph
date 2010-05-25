@@ -6,12 +6,16 @@ class ScruffyRenderer < BaseRenderer
 
   def to_html
     render_graph
-    "<iframe width=\"#{SCRUFFY_WIDTH}\" height=\"#{SCRUFFY_HEIGHT}\" src=\"./#{@file_name}\"></iframe>"
+    "<iframe width=\"#{SCRUFFY_WIDTH}\" height=\"#{SCRUFFY_HEIGHT}\" src=\"./#{graph_file_name}\"></iframe>"
   end
 
 private
   def format_file_name(desired_name)
-    desired_name.gsub("/","_").gsub("=","_").gsub("?","_")
+    desired_name.to_s.gsub("/","_").gsub("=","_").gsub("?","_")
+  end
+
+  def graph_file_name
+    @graph_name ||= "graph_#{format_file_name(path || 'overview')}_#{(rand * 100).to_i}.svg"
   end
 
   def render_graph
@@ -24,9 +28,7 @@ private
       graph.add s.type.to_sym, s.label, s.y_values
     end
 
-    @file_name = format_file_name("request_graph_#{path}.svg")
-
-    graph.render :to => @file_name, :min_value => 0, :max_value => find_max_y_value, :width => SCRUFFY_WIDTH, :height => SCRUFFY_HEIGHT
+    graph.render :to => graph_file_name, :min_value => 0, :max_value => find_max_y_value, :width => SCRUFFY_WIDTH, :height => SCRUFFY_HEIGHT
 
     graph
   end
