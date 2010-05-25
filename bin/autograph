@@ -50,6 +50,11 @@ opt_parse_opts = OptionParser.new do |opts|
     command_parts << "--test"
   end
 
+  opts.on("--graph-renderer RENDERER", "The class to use as a graph renderer (#{BaseRenderer::AVAILABLE_GRAPH_RENDERERS.join(', ')}).") do |opt|
+    options['graph_renderer'] = opt
+    command_parts << "--graph-renderer '#{opt}'"
+  end
+
   opts.separator ""
   opts.separator "Httperf Knobs:"
 
