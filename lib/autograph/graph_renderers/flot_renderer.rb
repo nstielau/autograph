@@ -15,6 +15,7 @@ class FlotRenderer < BaseRenderer
     end
 
     html = <<GRAPH_HTML
+    <h2>#{title}</h2>
     <div class="flot-graph" style="with:600px;height:350px;" id="#{graph_name}"></div>
 GRAPH_HTML
 
