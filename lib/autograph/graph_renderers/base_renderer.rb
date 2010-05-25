@@ -26,6 +26,9 @@ class BaseRenderer
   def self.header_html
   end
 
+  def self.footer_html
+  end
+
   def self.generate_graphs(reports, configuration)
     graphs = {}
     reports.each do |uri, report|

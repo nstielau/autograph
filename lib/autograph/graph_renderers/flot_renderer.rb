@@ -15,7 +15,10 @@ class FlotRenderer < BaseRenderer
     end
 
     html = <<GRAPH_HTML
-    <div style="with:600px;height:350px;" id="#{graph_name}"></div>
+    <div class="flot-graph" style="with:600px;height:350px;" id="#{graph_name}"></div>
+GRAPH_HTML
+
+    js = <<GRAPH_JS
     <script language="javascript" type="text/javascript">
     //#{series.inspect}
         $('.report').show();
@@ -24,19 +27,111 @@ class FlotRenderer < BaseRenderer
                 data: [#{data.join(",")}],
                 #{graph_type}: { show: true, fill: true }
             }
-        ]);
+        ], default_graph_options);
         $('.report').hide();
         show_report('overview');
     </script>
-GRAPH_HTML
+GRAPH_JS
+    @@footer_html ||= ""
+    @@footer_html = @@footer_html.to_s + js
     html
   end
 
   def self.header_html
     html = <<HEADER_HTML
-    <script type="text/javascript" src="http://127.0.0.1:1234/jquery.js"></script>
-    <script type="text/javascript" src="http://127.0.0.1:1234/jquery.flot.js"></script>
+    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
+    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js"></script>
 HEADER_HTML
+  end
+
+  def self.footer_html
+    @@footer_html ||= ""
+    footer_html = <<FOOTER_HTML
+  <script language="javascript" type="text/javascript">
+    var acolor;
+    var default_graph_options = {
+      series: {
+        lines: { show: true, lineWidth: 3 },
+        points: { show: true, radius: 4 }
+      },
+      legend: {
+        show: true,
+        backgroundColor: '#FFF',
+        backgroundOpacity: 0.9
+      },
+      series: {
+        lines: { show: true, lineWidth: 3 },
+        points: { show: true, fill: false },
+        shadowSize: 0,
+      },
+      xaxis: {
+      },
+      yaxis: {
+        show: true,
+      },
+      grid: {
+        show: true,
+        backgroundColor: null,
+        borderWidth: 0,
+        hoverable: true,
+        tickColor: "#E1E8F0",
+      },
+      colors: ["#5bba47","#d86b6d","#3d8aea","#333333"],
+      hooks: {
+        draw: function(plot, canvascontext) {
+          // Draw hook to change the swatch box in the legend to a square and fill it with
+          // the border color
+          $('.legendColorBox div div').each(function(index) {
+            var color = $(this).css('borderColor').match(/rgb\(\d+,\s*\d+,\s*\d+\)/)[0];
+            $(this).css({
+              backgroundColor: color,
+              height: '14px', width: '14px',
+              backgroundImage: "url(/stylesheets/images/black_lower_shadow.png)",
+              border: 'none'
+            });
+          });
+        }
+      }
+    };
+
+    // Callback function to show the tooltip
+    function showTooltip(item) {
+      var contents = "<strong>" + item.datapoint[1] + "" + "</strong> at " + item.datapoint[0];
+      var x = item.pageX;
+      var y = item.pageY - 10 - 50;
+
+      var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
+        padding: '5px',
+        position: 'absolute',
+        minWidth: '5em',
+        display: 'block',
+        top:  y+5,
+        left: x+5,
+        zIndex: 9999
+      });
+
+      obj.appendTo('body').fadeIn('200');
+    }
+
+    // Var to hold our previous point
+    var previousPoint = null;
+
+    // Bind to the plothover so we can show a tooltip
+    $(".flot-graph").bind("plothover", function (event, pos, item) {
+      if (item) {
+        if (previousPoint != item.datapoint) {
+          previousPoint = item.datapoint;
+          $("#flot-tooltip").remove();
+          showTooltip(item);
+        }
+      } else {
+        $('#flot-tooltip').remove().fadeOut('200');
+        previousPoint = null;
+      }
+    });
+</script>
+FOOTER_HTML
+  footer_html + @@footer_html
   end
 
 private
