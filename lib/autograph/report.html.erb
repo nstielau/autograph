@@ -4,6 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title><%= title %></title>
+  <%=  graph_header_html %>
   <style type="text/css">
   body,
   html {
@@ -132,7 +133,7 @@
     <h2>Report Detail</h2>
 
 <div id="overview" class='report'>
-<img src="<%= summary_graph.to_html %>"/>
+  <%= summary_graph.to_html %>
 </div>
 
 <div id="graph_discussion" class='report' style="display:none;">
@@ -151,7 +152,7 @@ Discussion on what these graphs mean.
       <div id="page_<%= uri %>" class='report' style="display:none;">
         <p>Report for <%= "http://#{host}#{uri}" %></p>
         <% graphs[uri].each do |graph| %>
-        <img src="<%= graph %>"/>
+          <%= graph.to_html %>
         <% end %>
 <pre>
 <%= report.to_s %>

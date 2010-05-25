@@ -9,6 +9,7 @@ class HtmlReport
     command_run = configuration["command_run"]
     notes = configuration["notes"]
     summary_graph = graphs['summary_graph']
+    graph_header_html = configuration.graph_renderer_class.header_html
 
     output_file = HtmlReport.determine_output_file(configuration['output_file'], configuration['output_dir'])
 
