@@ -5,7 +5,7 @@ class BaseRenderer
   attr :path, true
   attr :series
 
-  AVAILABLE_GRAPH_RENDERERS = %W(ScruffyRenderer GChartRenderer)
+  AVAILABLE_GRAPH_RENDERERS = %W(FlotRenderer)
 
   def initialize
     @series = []
@@ -38,13 +38,6 @@ class BaseRenderer
       request_rate_graph = configuration.graph_renderer_class.new
       request_rate_graph.title = "Demanded vs. Achieved Request Rate (r/s)"
       request_rate_graph.path = uri
-      request_rate_graph.width  = 600
-      request_rate_graph.height = 300
-
-      if reports['Avg']
-        avg_request_rate = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('conn/s').map{|x| x.to_f}, "Avg")
-        request_rate_graph.add_series(avg_request_rate)
-      end
 
       request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Request rate for '#{uri}'")
       request_rate_graph.add_series(request_rate)
@@ -54,13 +47,6 @@ class BaseRenderer
       response_time_graph = configuration.graph_renderer_class.new
       response_time_graph.path = uri
       response_time_graph.title = "Demanded Request Rate (r/s) vs. Response Time"
-      response_time_graph.width  = 600
-      response_time_graph.height = 300
-
-      if reports['Avg']
-        avg_response_time = GraphSeries.new(:area, report.column('rate'), reports['Avg'].column('reply time').map{|x| x.to_f}, "Avg")
-        response_time_graph.add_series(avg_response_time)
-      end
 
       response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Response time for '#{uri}'")
       response_time_graph.add_series(response_time)
