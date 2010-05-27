@@ -29,6 +29,8 @@ class Configuration
       # TODO: Add AcceptEncoding: gzip,deflate option
     end
 
+    puts pretty_print if opts['verbose']
+
     @conf
   end
 

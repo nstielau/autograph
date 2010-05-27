@@ -4,8 +4,6 @@ class AutoPerf
   def initialize(opts = {})
     conf = Configuration.new(opts)
 
-    puts configuration.pretty_print if opts['verbose']
-
     if conf['use_test_data']
       conf['host'] = "127.0.0.1"
       conf['uris'] = ['/', '/page1', '/page2']
