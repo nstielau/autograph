@@ -9,13 +9,13 @@ class AutoPerf
     if conf['use_test_data']
       conf['host'] = "127.0.0.1"
       conf['uris'] = ['/', '/page1', '/page2']
-      @reports = load_test_data(conf)
+      reports = load_test_data(conf)
     else
-      @reports = run_tests(conf)
+      reports = run_tests(conf)
     end
 
-    graphs = generate_graphs(@reports, conf)
-    HtmlReport.new(@reports, graphs, conf)
+    graphs = generate_graphs(reports, conf)
+    HtmlReport.new(reports, graphs, conf)
   end
 
   def generate_graphs(reports, configuration)
