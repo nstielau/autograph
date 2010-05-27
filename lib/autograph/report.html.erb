@@ -82,15 +82,6 @@
 
   </div>
   <div id="sidebar">
-    <div style="display:none">
-      <h3>Tested Pages</h3>
-      <ul>
-        <li><a href="#" onclick="show_report('overview');" title="Overview">Overview</a></li>
-        <% uris.each do |uri|%>
-        <li><a href="#" onclick="show_report('page_<%= uri %>');" title="<%= uri %>"><%= uri %></a></li>
-        <% end %>
-      </ul>
-    </div>
     <% if notes %>
       <h3>Report Notes</h3>
       <p><%= notes %></p>
@@ -106,12 +97,8 @@
   <div id="main">
     <% graphs.each_pair do |k,g| %>
       <h2><%= g.title %></h2>
-      <div id="<%= k %>" style="width:600px;height:300px;"></div>
+      <div class="flot-graph" id="<%= k %>" style="width:600px;height:300px;"></div>
     <% end %>
-
-<div id="overview" class='report'>
-  <%= graphs[:max_request_rate].inspect %>
-</div>
 
 <div id="graph_discussion" class='report' style="display:none;">
   <h3>Methods</h3>
@@ -179,7 +166,7 @@
       grid: {
         show: true,
         backgroundColor: null,
-        borderWidth: 0,
+        borderWidth: 2,
         hoverable: true,
         tickColor: "#E1E8F0",
       },
@@ -232,6 +219,8 @@
     end
     "'#{dataset_id=dataset_id+1}' : {label:  \"#{s.label}\", data: [#{points.join(", ")}]}"
   end.join(", \n")
+  # ideal_points = graphs[:request_rate].series[0].x_values.map{|x|"[#{x},#{x}]"}
+  # data_string + ",'#{dataset_id=dataset_id+1}' : {label:  \"Ideal\", data: [#{ideal_points.join(", ")}]}"
   data_string
 %>
     };
@@ -249,6 +238,16 @@
   data_string
 %>
     };
+
+        var max_request_rate_datasets = [
+    <%=
+      data_strings = []
+      data_string = graphs[:max_request_rate].series.each_with_index do |s, index|
+        data_strings << "{label:  \"#{s.label}\", data: [[#{index}, #{s.y_values[0]}]]}"
+      end
+      data_strings.join(", \n")
+    %>
+        ];
 
     // hard-code color indices to prevent them from shifting as
     // countries are turned on/off
@@ -287,20 +286,15 @@
         });
 
         if (data1.length > 0)
-            $.plot($("#request_rate"), data1, {
-                yaxis: { min: 0 },
-                xaxis: { tickDecimals: 0 }
-            });
+            $.plot($("#request_rate"), data1, default_graph_options);
 
 
         if (data2.length > 0)
-            $.plot($("#response_time"), data2, {
-                yaxis: { min: 0 },
-                xaxis: { tickDecimals: 0 }
-            });
+            $.plot($("#response_time"), data2, default_graph_options);
     }
 
     plotAccordingToChoices();
+    $.plot($("#max_request_rate"), max_request_rate_datasets, $.merge({series: {lines: {show: false}, bars : {show: true}}}, default_graph_options));
 
 
 </script>
