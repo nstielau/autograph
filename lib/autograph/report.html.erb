@@ -47,7 +47,7 @@
     width:700px;
   }
   #main h2, #main h3, #main p {
-    padding:0 10px;
+    padding:5px 0;
     }
   #sidebar {
     float:left;
@@ -100,7 +100,8 @@
       <div class="flot-graph" id="<%= k %>" style="width:600px;height:300px;"></div>
     <% end %>
 
-<div id="graph_discussion" class='report' style="display:none;">
+<div id="graph_discussion">
+  <h2>Discussion</h2>
   <h3>Methods</h3>
   <p>
     Use HTTPERF to load different pages a fixed number of times, at a fixed rate, and record the response time and rate at which connections are accepted.  By varying the rate, we can see how the response time and connection rate are effected by increased load on the server.
@@ -122,9 +123,10 @@
 • Run from a server, not your laptop
 </div>
 
+  <h2>Report Tables</h2>
     <% reports.each do |uri, report| %>
       <div id="page_<%= uri %>" class='report' >
-        <p>Report for <%= "http://#{host}#{uri}" %></p>
+        <p>Test data for <%= "http://#{host}#{uri}" %></p>
 <pre>
 <%= report.to_s %>
 </pre>
