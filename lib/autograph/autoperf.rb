@@ -70,22 +70,6 @@ class AutoPerf
     configuration['uris'].uniq.each do |uri|
       reports[uri] = vary_rate(uri, configuration)
     end
-
-    # TODO: Factor out to create_httperf_wlog
-    if !configuration['httperf_wlog'] && configuration['uris'].length > 1 && configuration['average']
-      replay_log = File.open('tmp_replay_log', 'w')
-      path = replay_log.path
-      puts "Tmp replay log is at #{path}" if configuration['verbose']
-      index = 1
-      configuration['uris'].each do |uri|
-        replay_log.print uri
-        replay_log.putc 0 if index < configuration['uris'].length # ASCII NUL Terminate join paths
-        index = index + 1
-      end
-      replay_log.close
-      puts "Replay log is at #{path}" if configuration['verbose']
-      reports["Avg"] = vary_rate('httperf_wlog' => "y,#{path}")
-    end
     reports
   end
 
