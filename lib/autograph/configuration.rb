@@ -56,12 +56,4 @@ class Configuration
     io.puts
     io.read
   end
-
-  def graph_renderer_class
-    begin
-      Object.const_get(@conf['graph_renderer'].to_s)
-    rescue => e
-      abort("#{@conf['graph_renderer'].to_s} is not one of the available graph renderers (#{BaseRenderer::AVAILABLE_GRAPH_RENDERERS.join(', ')})")
-    end
-  end
 end
