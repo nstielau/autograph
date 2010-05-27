@@ -1,4 +1,4 @@
-class GraphSeries
+class Graph
   attr :title, true
   attr :series
 

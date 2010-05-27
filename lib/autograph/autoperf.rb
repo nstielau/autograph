@@ -14,8 +14,27 @@ class AutoPerf
       @reports = run_tests(conf)
     end
 
-    graphs = BaseRenderer.generate_graphs(@reports, conf)
+    graphs = generate_graphs(@reports, conf)
     HtmlReport.new(@reports, graphs, conf)
+  end
+
+  def generate_graphs(reports, configuration)
+    graphs = {}
+    graphs[:request_rate]  = Graph.new(:title => "Demanded vs. Achieved Request Rate (r/s)")
+    graphs[:response_time] = Graph.new(:title => "Demanded Request Rate (r/s) vs. Response Time")
+    graphs[:max_request_rate] = Graph.new(:title => "Maximum Achieved Request Rate")
+    reports.each do |uri, report|
+      graphs[:request_rate].series << GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Request rate for '#{uri}'", uri)
+      graphs[:response_time].series << GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Response time for '#{uri}'", uri)
+    end
+
+    reports.keys.each_with_index do |key, index|
+      max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
+      max_request_rate = GraphSeries.new(:bar, [index], [max], "Max Request Rate for '#{key}'")
+      graphs[:max_request_rate].series << max_request_rate
+    end
+
+    graphs
   end
 
   def benchmark(conf)

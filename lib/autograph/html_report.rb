@@ -8,8 +8,6 @@ class HtmlReport
     uris = configuration['uris']
     command_run = configuration["command_run"]
     notes = configuration["notes"]
-    summary_graph = graphs['summary_graph']
-    graph_class = configuration.graph_renderer_class
 
     output_file = HtmlReport.determine_output_file(configuration['output_file'], configuration['output_dir'])
 

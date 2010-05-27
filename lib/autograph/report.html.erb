@@ -4,7 +4,8 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title><%= title %></title>
-  <%=  graph_class.header_html %>
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js"></script>
   <style type="text/css">
   body,
   html {
@@ -70,25 +71,6 @@
     background: #FFFFFF;
   }
   </style>
-  <script type="text/javascript"``>
-    function hide_reports() {
-      var reports = document.getElementsByClassName('report');
-      for (var i=0; i < reports.length; i++) {
-        reports[i].style.display = 'none';
-      }
-    }
-
-    function show_report(uri) {
-      hide_reports();
-      document.getElementById(uri).style.display = '';
-    }
-
-    function uri_change_handler(uri) {
-      var page_select = document.getElementById('pages');
-      show_report(page_select.value);
-    }
-  </script>
-
 </head>
 <body>
 <div id="wrap">
@@ -96,16 +78,6 @@
     <h1>Load testing report</h1>
     <h3>Date: <%= date %></h3>
     <h3>Host: <%= host %></h3>
-    <h3>Page:
-      <select id="pages" onchange="uri_change_handler()">
-        <option value='overview'>Overview</option>
-        <% uris.each do |uri|%>
-          <option value='page_<%= uri %>'><%=uri%></option>
-        <% end %>
-      </select>
-    </h3>
-
-  </div>
   <div id="nav">
 
   </div>
@@ -127,13 +99,21 @@
     <ul>
       <li><a href="#" onclick="show_report('graph_discussion');" title="Discussion">Discussion</a></li>
     </ul>
+    <h3>Tests</h3>
+    <div id="choices"></div>
 
   </div>
   <div id="main">
-    <h2>Report Detail</h2>
+    <% graphs.each_pair do |k,g| %>
+      <h2><%= g.title %></h2>
+      <div id="<%= k %>" style="width:600px;height:300px;"></div>
+    <% end %>
+
+    <div id="placeholder2" style="width:600px;height:300px;"></div>
+    <div id="placeholder3" style="width:600px;height:300px;"></div>
 
 <div id="overview" class='report'>
-  <%= summary_graph.to_html %>
+  <%= graphs[:max_request_rate].inspect %>
 </div>
 
 <div id="graph_discussion" class='report' style="display:none;">
@@ -159,11 +139,8 @@
 </div>
 
     <% reports.each do |uri, report| %>
-      <div id="page_<%= uri %>" class='report' style="display:none;">
+      <div id="page_<%= uri %>" class='report' >
         <p>Report for <%= "http://#{host}#{uri}" %></p>
-        <% graphs[uri].each do |graph| %>
-          <%= graph.to_html %>
-        <% end %>
 <pre>
 <%= report.to_s %>
 </pre>
@@ -180,7 +157,156 @@
     </div>
   </div>
 </div>
-<%=  graph_class.footer_html %>
+  <script language="javascript" type="text/javascript">
+    var acolor;
+    var default_graph_options = {
+      series: {
+        lines: { show: true, lineWidth: 3 },
+        points: { show: true, radius: 4 }
+      },
+      legend: {
+        show: true,
+        backgroundColor: '#FFF',
+        backgroundOpacity: 0.9
+      },
+      series: {
+        lines: { show: true, lineWidth: 3 },
+        points: { show: true, fill: false },
+        shadowSize: 0,
+      },
+      xaxis: {
+      },
+      yaxis: {
+        show: true,
+      },
+      grid: {
+        show: true,
+        backgroundColor: null,
+        borderWidth: 0,
+        hoverable: true,
+        tickColor: "#E1E8F0",
+      },
+      colors: ["#5bba47","#d86b6d","#3d8aea","#333333"]
+    };
+
+    // Callback function to show the tooltip
+    function showTooltip(item) {
+      var contents = "(" + item.datapoint[1] + "," + item.datapoint[0] + ")";
+      var x = item.pageX;
+      var y = item.pageY - 10;
+
+      var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
+        padding: '5px',
+        position: 'absolute',
+        minWidth: '5em',
+        display: 'block',
+        top:  y+5,
+        left: x+5,
+        zIndex: 9999
+      });
+
+      obj.appendTo('body').fadeIn('200');
+    }
+
+    // Var to hold our previous point
+    var previousPoint = null;
+
+    // Bind to the plothover so we can show a tooltip
+    $(".flot-graph").bind("plothover", function (event, pos, item) {
+      if (item) {
+        if (previousPoint != item.datapoint) {
+          previousPoint = item.datapoint;
+          $("#flot-tooltip").remove();
+          showTooltip(item);
+        }
+      } else {
+        $('#flot-tooltip').remove().fadeOut('200');
+        previousPoint = null;
+      }
+    });
+
+    var request_rate_datasets = {
+<%=
+  dataset_id=0;
+  data_string = graphs[:request_rate].series.map do |s|
+    points = []
+    s.x_values.each_with_index do |x,i|
+      points << "[#{s.x_values[i]}, #{s.y_values[i]}]"
+    end
+    "'#{dataset_id=dataset_id+1}' : {label:  \"#{s.label}\", data: [#{points.join(", ")}]}"
+  end.join(", \n")
+  data_string
+%>
+    };
+
+    var response_time_datasets = {
+<%=
+  dataset_id=0;
+  data_string = graphs[:response_time].series.map do |s|
+    points = []
+    s.x_values.each_with_index do |x,i|
+      points << "[#{s.x_values[i]}, #{s.y_values[i]}]"
+    end
+    "'#{dataset_id=dataset_id+1}' : {label:  \"#{s.label}\", data: [#{points.join(", ")}]}"
+  end.join(", \n")
+  data_string
+%>
+    };
+
+    // hard-code color indices to prevent them from shifting as
+    // countries are turned on/off
+    var i = 0;
+    $.each(request_rate_datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+    i = 0;
+    $.each(response_time_datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+
+    // insert checkboxes
+    var choiceContainer = $("#choices");
+    $.each(request_rate_datasets, function(key, val) {
+        choiceContainer.append('<br/><input type="checkbox" name="' + key +
+                               '" checked="checked" id="id' + key + '">' +
+                               '<label for="id' + key + '">'
+                                + val.label + '</label>');
+    });
+    choiceContainer.find("input").click(plotAccordingToChoices);
+
+
+    function plotAccordingToChoices() {
+        var data1 = [];
+        var data2 = [];
+
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            if (key && request_rate_datasets[key])
+                data1.push(request_rate_datasets[key]);
+              if (key && response_time_datasets[key])
+                  data2.push(response_time_datasets[key]);
+        });
+
+        if (data1.length > 0)
+            $.plot($("#request_rate"), data1, {
+                yaxis: { min: 0 },
+                xaxis: { tickDecimals: 0 }
+            });
+
+
+        if (data2.length > 0)
+            $.plot($("#response_time"), data2, {
+                yaxis: { min: 0 },
+                xaxis: { tickDecimals: 0 }
+            });
+    }
+
+    plotAccordingToChoices();
+
+
+</script>
 </body>
 </html>
 
