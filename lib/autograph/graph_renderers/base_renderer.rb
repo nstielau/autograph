@@ -76,6 +76,7 @@ class BaseRenderer
     reports.keys.each do |key|
       max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
       max_request_rate = GraphSeries.new(:bar, [key], [max], "Max Request Rate for '#{key}'")
+      max_request_rate.path = key
       max_rate_graph.add_series(max_request_rate)
     end
 

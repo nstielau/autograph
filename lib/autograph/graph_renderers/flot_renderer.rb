@@ -1,19 +1,21 @@
 class FlotRenderer < BaseRenderer
   def to_html
-    data = []
+    js_series = []
     graph_type = ''
     if series[0].type.to_sym == :bar
       graph_type = "bars"
       series.each_with_index do |s, i|
-        data << "[#{i}, #{s.y_values[0]}]"
+        js_series << "{data: [[#{i}, #{s.y_values[0]}]], label: \"#{s.path}\", bars: { show: true, fill: true }}"
       end
     else
       graph_type = "lines"
+      data = []
       1.upto(series[0].x_values.size.to_i - 1) do |index|
         data << "[#{series[0].x_values[index]}, #{series[0].y_values[index]}]"
       end
+      js_series << "{data: [#{data.join(", ")}], label: \"#{title}\", lines: { show: true, fill: true }}"
     end
-
+    #    var data = [{ data: [[1,1]], label: "Pressure", color: "#333" }, { data: [[2,3]], label: "Temperature", color: "#FF0000" }];
     html = <<GRAPH_HTML
     <h2>#{title}</h2>
     <div class="flot-graph" style="with:600px;height:350px;" id="#{graph_name}"></div>
@@ -24,10 +26,7 @@ GRAPH_HTML
     //#{series.inspect}
         $('.report').show();
         $.plot($("##{graph_name}"), [
-            {
-                data: [#{data.join(",")}],
-                #{graph_type}: { show: true, fill: true }
-            }
+          #{js_series.join(", ")}
         ], default_graph_options);
         $('.report').hide();
         show_report('overview');
@@ -77,22 +76,7 @@ HEADER_HTML
         hoverable: true,
         tickColor: "#E1E8F0",
       },
-      colors: ["#5bba47","#d86b6d","#3d8aea","#333333"],
-      hooks: {
-        draw: function(plot, canvascontext) {
-          // Draw hook to change the swatch box in the legend to a square and fill it with
-          // the border color
-          $('.legendColorBox div div').each(function(index) {
-            var color = $(this).css('borderColor').match(/rgb\(\d+,\s*\d+,\s*\d+\)/)[0];
-            $(this).css({
-              backgroundColor: color,
-              height: '14px', width: '14px',
-              backgroundImage: "url(/stylesheets/images/black_lower_shadow.png)",
-              border: 'none'
-            });
-          });
-        }
-      }
+      colors: ["#5bba47","#d86b6d","#3d8aea","#333333"]
     };
 
     // Callback function to show the tooltip
