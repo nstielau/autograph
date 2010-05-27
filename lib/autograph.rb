@@ -6,11 +6,9 @@ require 'ruport'
 require 'pp'
 
 require 'autograph/autoperf'
+require 'autograph/graph'
 require 'autograph/graph_series'
 require 'autograph/html_report'
 require 'autograph/configuration'
 
 require 'autograph/graph_renderers/base_renderer'
-require 'autograph/graph_renderers/gchart_renderer'
-require 'autograph/graph_renderers/scruffy_renderer'
-require 'autograph/graph_renderers/flot_renderer'

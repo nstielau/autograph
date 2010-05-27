@@ -4,7 +4,7 @@ class GraphSeries
   attr :label, true
   attr :type, true
   attr :path, true
-  
+
   def initialize(t, xs, ys, l, p=nil)
     @type = t
     @x_values = xs.map{|x| x.to_f}
