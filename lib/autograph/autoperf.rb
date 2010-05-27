@@ -97,8 +97,8 @@ class AutoPerf
       conns = [5.0, 21.5, 28.8, 30.6, 26.3, 24.7, 23.0, 25.8, 28.0, 27.4, 27.9, 22.2, 22.7]
       1.upto(10) do |i|
         reports[uri] << {'rate' => i*10 - 10,
-                         'conn/s' => conns[i % conns.length],
-                         'reply time' => times[i % times.length]}
+                         'conn/s' => conns[((i + rand * 10) % conns.length).to_i],
+                         'reply time' => times[((i + rand * 10) % times.length).to_i]}
       end
     end
     reports
