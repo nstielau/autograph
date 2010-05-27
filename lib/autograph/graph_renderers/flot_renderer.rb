@@ -5,7 +5,7 @@ class FlotRenderer < BaseRenderer
     if series[0].type.to_sym == :bar
       graph_type = "bars"
       series.each_with_index do |s, i|
-        js_series << "{data: [[#{i}, #{s.y_values[0]}]], label: \"#{s.path}\", bars: { show: true, fill: true }}"
+        js_series << "{data: [[#{i}, #{s.y_values[0]}]], label: \"#{s.label}\", bars: { show: true, fill: true }}"
       end
     else
       graph_type = "lines"
@@ -13,7 +13,7 @@ class FlotRenderer < BaseRenderer
       1.upto(series[0].x_values.size.to_i - 1) do |index|
         data << "[#{series[0].x_values[index]}, #{series[0].y_values[index]}]"
       end
-      js_series << "{data: [#{data.join(", ")}], label: \"#{title}\", lines: { show: true, fill: true }}"
+      js_series << "{data: [#{data.join(", ")}], label: \"#{series[0].label}\", lines: { show: true, fill: true }}"
     end
     #    var data = [{ data: [[1,1]], label: "Pressure", color: "#333" }, { data: [[2,3]], label: "Temperature", color: "#FF0000" }];
     html = <<GRAPH_HTML

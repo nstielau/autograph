@@ -46,7 +46,7 @@ class BaseRenderer
         request_rate_graph.add_series(avg_request_rate)
       end
 
-      request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Requests for '#{uri}'")
+      request_rate = GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Request rate for '#{uri}'")
       request_rate_graph.add_series(request_rate)
 
       graphs[uri] << request_rate_graph
@@ -62,7 +62,7 @@ class BaseRenderer
         response_time_graph.add_series(avg_response_time)
       end
 
-      response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Requests for '#{uri}'")
+      response_time = GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Response time for '#{uri}'")
       response_time_graph.add_series(response_time)
 
       graphs[uri] << response_time_graph
