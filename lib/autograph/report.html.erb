@@ -137,9 +137,19 @@
 </div>
 
 <div id="graph_discussion" class='report' style="display:none;">
-Discussion on what these graphs mean.
-
-• Increase concurrent connections, and see at which point your app will no longer serve at the demanded request rate
+  <h3>Methods</h3>
+  <p>
+    Use HTTPERF to load different pages a fixed number of times, at a fixed rate, and record the response time and rate at which connections are accepted.  By varying the rate, we can see how the response time and connection rate are effected by increased load on the server.
+  </p>
+  <h3>Graphs</h3>
+  <h4>Demanded vs. Achieved request rate</h4>
+  <p>
+  Ideally, this graph would be a straight line at 45 degrees; for every request that is sent to the server, it accepts a connection, regardless of how many concurrent requests are made.  Realistically, this graph will start linear and degrade as network or software bottlenecks are hit. The point at which this graph breaks linearity indicates the maximum possible concurrent requests the system can successfully serve.
+  </p>
+  <h4>Demanded Request Rate vs. response time</h4>
+  <p>
+  Ideally, this graph would be flat and low, indicating consistent and fast responses times.  Realistically, this graph will either be slightly angled or flat followed by a dramatic uptick.  The point at which the response times dramatically increase will coincide with the point at which it cannot serve all requests.
+  </p>
 • Find which pages are heavier/lighter than others
 • Replay a log (with a little work)
 
