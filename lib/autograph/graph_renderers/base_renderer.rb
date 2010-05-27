@@ -1,7 +1,5 @@
 class BaseRenderer
   attr :title, true
-  attr :width, true
-  attr :height, true
   attr :path, true
   attr :series
 
@@ -56,8 +54,6 @@ class BaseRenderer
 
     max_rate_graph = configuration.graph_renderer_class.new
     max_rate_graph.title = "Max Achieved Connection Rate"
-    max_rate_graph.width  = 600
-    max_rate_graph.height = 300
 
     reports.keys.each do |key|
       max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
