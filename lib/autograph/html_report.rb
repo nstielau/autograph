@@ -4,7 +4,6 @@ class HtmlReport
   def initialize(reports, graphs, configuration)
     date = Time.now
     host = configuration['host']
-    title = "Report for #{host}"
     uris = configuration['uris']
     command_run = configuration["command_run"]
     notes = configuration["notes"]
