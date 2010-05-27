@@ -7,6 +7,7 @@ class AutoPerf
     puts configuration.pretty_print if opts['verbose']
 
     if conf['use_test_data']
+      conf['host'] = "127.0.0.1"
       conf['uris'] = ['/', '/page1', '/page2']
       @reports = load_test_data(conf)
     else
