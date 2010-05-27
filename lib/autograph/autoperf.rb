@@ -20,9 +20,10 @@ class AutoPerf
 
   def generate_graphs(reports, configuration)
     graphs = {}
-    graphs[:request_rate]  = Graph.new(:title => "Demanded vs. Achieved Request Rate (r/s)")
-    graphs[:response_time] = Graph.new(:title => "Demanded Request Rate (r/s) vs. Response Time")
+    graphs[:request_rate]     = Graph.new(:title => "Demanded vs. Achieved Request Rate (r/s)")
+    graphs[:response_time]    = Graph.new(:title => "Demanded Request Rate (r/s) vs. Response Time")
     graphs[:max_request_rate] = Graph.new(:title => "Maximum Achieved Request Rate")
+
     reports.each do |uri, report|
       graphs[:request_rate].series << GraphSeries.new(:line, report.column('rate'), report.column('conn/s').map{|x| x.to_f}, "Request rate for '#{uri}'", uri)
       graphs[:response_time].series << GraphSeries.new(:line, report.column('rate'), report.column('reply time'), "Response time for '#{uri}'", uri)
