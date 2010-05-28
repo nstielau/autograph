@@ -1,0 +1,3 @@
+/*Prevent IE6 from breaking 2 column sidebar with a search*/
+#search_form input.search_input { width: 127px; }
+pre { zoom: 1; }
