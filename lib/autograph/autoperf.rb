@@ -100,6 +100,9 @@ class AutoPerf
         reports[uri] << {'rate' => i*10 - 10,
                          'errors' => 0,
                          'conn/s' => conns[((i + rand * 10) % conns.length).to_i],
+                         'req/s' => 0,
+                         'replies/s avg' => 0,
+                         'net io (KB/s)' => 100,
                          'reply time' => times[((i + rand * 10) % times.length).to_i]}
       end
     end
