@@ -10,6 +10,9 @@ Can work with SOAP.
 
 A note on stats, from Zed Shaw: http://zedshaw.com/essays/programmer_stats.html
 
+Start off with broad ranges and zero in on rate/call/connection limits
+Run from a server, not your laptop, you don't want to be limited by your internet connection.
+
 == PROBLEMS:
 
 * No 'AcceptEncoding' support
