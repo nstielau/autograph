@@ -24,3 +24,5 @@ load_test*
 eapis*
 *.svg
 *.gemspec
+
+*.html
