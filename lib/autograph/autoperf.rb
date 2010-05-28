@@ -28,8 +28,7 @@ class AutoPerf
     end
 
     reports.keys.each_with_index do |key, index|
-      max = reports[key].column('conn/s').map{|x| x.to_i}.max.to_i
-      graphs[:max_request_rate].series << GraphSeries.new([index], [max], "Max Request Rate for '#{key}'")
+      graphs[:max_request_rate].series << GraphSeries.new([index], [reports[key].max('conn/s')], "Max Request Rate for '#{key}'")
     end
 
     graphs

@@ -10,6 +10,10 @@ class Table
     @rows.map{|r| r[name.to_s.to_sym]}
   end
 
+  def max(name)
+    @rows.map{|r| r[name.to_s.to_sym].to_i}.max
+  end
+
   def <<(row_hash)
     # Symbolize keys on the way in
     @rows << row_hash.inject({}){|x,y| x[y[0].to_s.to_sym] = y[1]; x}
