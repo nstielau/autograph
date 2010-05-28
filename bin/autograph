@@ -140,5 +140,6 @@ end
 begin
   AutoPerf.new(options)
 rescue => e
-  abort(e.to_s)
+  abort(e.to_s) unless options["verbose"]
+  raise e
 end
