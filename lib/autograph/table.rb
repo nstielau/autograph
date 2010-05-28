@@ -2,17 +2,17 @@ class Table
   attr :rows
 
   def initialize(column_names)
-    @column_names = column_names.map{|n| n.to_sym}
+    @column_names = column_names.map{|n| n.to_s.to_sym}
     @rows = []
   end
 
   def column(name)
-    @rows.map{|r| r[name]}
+    @rows.map{|r| r[name.to_s.to_sym]}
   end
 
   def <<(row_hash)
     # Symbolize keys
-    @rows << row_hash.inject({}){|x,y| x[y[0].to_sym] = y[1]; x}
+    @rows << row_hash.inject({}){|x,y| x[y[0].to_s.to_sym] = y[1]; x}
   end
 
   def to_html

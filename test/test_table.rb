@@ -34,6 +34,15 @@ class TestGraphSeries < Test::Unit::TestCase
     assert_equal t.column(:column_b), [2,222]
   end
 
+  def test_column_with_string_key
+    one   = {:column_b => 2}
+    two   = {'column_b' => 222}
+    t = Table.new(COLUMN_NAMES)
+    t << one
+    t << two
+    assert_equal t.column("column_b"), [2,222]
+  end
+
   def test_to_html_returns_string
     assert_equal Table.new(COLUMN_NAMES).to_html.class, String
   end
