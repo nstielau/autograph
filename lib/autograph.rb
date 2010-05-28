@@ -10,5 +10,6 @@ require 'autograph/graph'
 require 'autograph/graph_series'
 require 'autograph/html_report'
 require 'autograph/configuration'
+require 'autograph/table'
 
 require 'autograph/graph_renderers/base_renderer'
