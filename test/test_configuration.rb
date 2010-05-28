@@ -17,11 +17,6 @@ class TestHtmlReport < Test::Unit::TestCase
     assert_equal c['low_rate'], 1
   end
 
-  def test_graph_render_klazz_helper
-    c = Configuration.new()
-    assert_equal c.graph_renderer_class, GChartRenderer
-  end
-
   def test_pretty_print_returns_a_string
     c = Configuration.new().pretty_print
     assert_equal c.class, String
