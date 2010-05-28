@@ -69,7 +69,7 @@ class AutoPerf
   def vary_rate(uri, configuration)
     puts "Config is #{configuration.inspect}" if configuration['verbose']
     results = {}
-    report = Table(:column_names => COLUMN_NAMES)
+    report = Table.new(COLUMN_NAMES)
 
     (configuration['low_rate']..configuration['high_rate']).step(configuration['rate_step']) do |rate|
       results[rate] = benchmark(configuration.merge({'httperf_rate' => rate, 'httperf_uri' => uri}))
@@ -93,7 +93,7 @@ class AutoPerf
   def load_test_data(configuration)
     reports = {}
     configuration['uris'].each do |uri|
-      reports[uri] = ::Ruport::Data::Table.new(:column_names => COLUMN_NAMES)
+      reports[uri] = Table.new(COLUMN_NAMES)
       times = [130.7, 132.7, 180.4, 438.3, 591.9, 686.9, 739.4, 661.3, 727.1, 546.5, 711.1, 893.7, 870.0]
       conns = [5.0, 21.5, 28.8, 30.6, 26.3, 24.7, 23.0, 25.8, 28.0, 27.4, 27.9, 22.2, 22.7]
       1.upto(10) do |i|

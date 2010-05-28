@@ -81,7 +81,7 @@
       <div id="page_<%= uri %>" class='report' >
         <p>Test data for <%= "http://#{host}#{uri}" %></p>
 <pre>
-<%= report.to_s %>
+<%= report.to_html %>
 </pre>
       </div>
     <% end %>
