@@ -5,8 +5,6 @@ class AutoPerf
     conf = Configuration.new(opts)
 
     if conf['use_test_data']
-      conf['host'] = "127.0.0.1"
-      conf['uris'] = ['/', '/page1', '/page2']
       reports = load_test_data(conf)
     else
       reports = run_tests(conf)
@@ -91,6 +89,8 @@ class AutoPerf
 
   def load_test_data(configuration)
     reports = {}
+    configuration['host'] = "127.0.0.1"
+    configuration['uris'] = ['/', '/page1', '/page2']
     configuration['uris'].each do |uri|
       reports[uri] = Table.new(COLUMN_NAMES)
       times = [130.7, 132.7, 180.4, 438.3, 591.9, 686.9, 739.4, 661.3, 727.1, 546.5, 711.1, 893.7, 870.0]
