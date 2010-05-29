@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<h2>Set up a load testing server on EC2</h2>
+
+<p>
+Here are some quick instructions for getting an EC2 server up and running that you can test from.  I like the ubuntu AMIs from <a href="http://alestic.com/index.html">Alestic</a>. You can use whatever OS or instance-type you like, but be aware of EC2 <a href="http://www.philchen.com/2009/06/05/what-is-the-bandwidth-throughput-for-ec2">throughput limitations</a>.
+</p>
+
+<p>
+Launch an instance
+<pre>
+ec2-run-instances  -t c1.medium -n 1 -g default -k default --user-data-file load_testing_server.sh  ami-2d4aa444
+</pre>
+</p>
+
+<p>
+Setup Autograph
+<pre>
+  sudo apt-get install -y ruby rubygems httperf
+  sudo gem install autograph
+  sudo ln -s /var/lib/gems/1.8/bin/autograph /usr/bin/autograph
+  autograph
+</pre>
+</p>
+
+<p>
+  Test!
+  <pre>
+    autograph --host example.com
+  </pre>
+</p>
