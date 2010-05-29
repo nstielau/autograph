@@ -6,7 +6,7 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="http://nstielau.github.com/autograph/stylesheets/images/favicon.ico" />
   <!--Stylesheets-->
-  <link href="http://nstielau.github.com/autograph/stylesheets/master.css" type="text/css" media="screen" rel="stylesheet" />
+  <link href="./stylesheets/master.css" type="text/css" media="screen" rel="stylesheet" />
   <!--[if lt IE 8]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie.css" /><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie6.css" /><![endif]-->
   <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
@@ -34,18 +34,13 @@
   <div id="sidebar">
     <ul>
       <li class="widget widget_recent_entries">
-        <h2 class="widgettitle">Report Sections</h2>
+        <h2 class="widgettitle">Pages</h2>
         <ul>
-          <li><a href="#" onclick="show_section('graphs');">Graphs</a></li>
-          <li><a href="#" onclick="show_section('tables');">Tables</a></li>
-          <li><a href="#" onclick="show_section('discussion');">Discussion</a></li>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./reading.html">Recommended Reading</a></li>
+          <li><a href="./example.html">Example Report</a></li>
         </ul>
       </li>
-      <li class="section section_graphs">
-        <h2 class="widgettitle">Tested Pages</h2>
-        <div id="choices"></div>
-      </li>
-
     </ul>
   </div><!--end sidebar-->
     <div id="footer">
@@ -53,136 +48,5 @@
       <p>Theme modified from "Vigilance Theme" by <a href="http://thethemefoundry.com">The Theme Foundry</a></p>
     </div><!--end footer-->
   </div><!--end wrapper-->
-    <script language="javascript" type="text/javascript">
-    function show_section(name) {
-      $('.section').hide();
-      $('.section_' + name).show();
-    }
-
-      var acolor;
-      var default_graph_options = {
-        series: {
-          lines: { show: true, lineWidth: 3 },
-          points: { show: true, radius: 4 }
-        },
-        legend: {
-          show: true,
-          backgroundColor: '#FFF',
-          backgroundOpacity: 0.9
-        },
-        series: {
-          lines: { show: true, lineWidth: 3 },
-          points: { show: true, fill: false },
-          shadowSize: 0,
-        },
-        xaxis: {},
-        yaxis: {
-          show: true,
-        },
-        grid: {
-          show: true,
-          backgroundColor: null,
-          borderWidth: 2,
-          hoverable: true,
-          tickColor: "#E1E8F0",
-        },
-        colors: ["#5bba47","#d86b6d","#3d8aea","#333333"]
-      };
-
-      // Callback function to show the tooltip
-      function showTooltip(item) {
-        var contents = "(" + item.datapoint[1] + "," + item.datapoint[0] + ")";
-        var x = item.pageX;
-        var y = item.pageY - 10;
-
-        var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
-          padding: '5px',
-          position: 'absolute',
-          minWidth: '5em',
-          display: 'block',
-          top:  y+5,
-          left: x+5,
-          zIndex: 9999
-        });
-
-        obj.appendTo('body').fadeIn('200');
-      }
-
-      // Var to hold our previous point
-      var previousPoint = null;
-
-      // Bind to the plothover so we can show a tooltip
-      $(".flot-graph").bind("plothover", function (event, pos, item) {
-        if (item) {
-          if (previousPoint != item.datapoint) {
-            previousPoint = item.datapoint;
-            $("#flot-tooltip").remove();
-            showTooltip(item);
-          }
-        } else {
-          $('#flot-tooltip').remove().fadeOut('200');
-          previousPoint = null;
-        }
-      });
-
-      var request_rate_datasets = {
-  '1' : {label:  "Request rate for '/'", data: [[1.0, 1.2], [4.0, 4.6], [7.0, 7.7], [10.0, 10.5]]}
-      };
-
-      var response_time_datasets = {
-  '1' : {label:  "Response time for '/'", data: [[1.0, 38.2], [4.0, 41.2], [7.0, 42.9], [10.0, 40.7]]}
-      };
-
-          var max_request_rate_datasets = [
-      {label:  "Max Request Rate for '/'", data: [[0, 10.0]]}
-          ];
-
-      // hard-code color indices to prevent them from shifting as
-      // countries are turned on/off
-      var i = 0;
-      $.each(request_rate_datasets, function(key, val) {
-          val.color = i;
-          ++i;
-      });
-      i = 0;
-      $.each(response_time_datasets, function(key, val) {
-          val.color = i;
-          ++i;
-      });
-
-      // insert checkboxes
-      var choiceContainer = $("#choices");
-      $.each(request_rate_datasets, function(key, val) {
-          choiceContainer.append('<br/><input type="checkbox" name="' + key +
-                                 '" checked="checked" id="id' + key + '">' +
-                                 '<label style="font-size: 1.5em; padding-left: 10px;" for="id' + key + '">'
-                                  + val.label.replace("Request rate for ", "") + '</label>');
-      });
-      choiceContainer.find("input").click(plotAccordingToChoices);
-
-
-      function plotAccordingToChoices() {
-          var data1 = [];
-          var data2 = [];
-
-          choiceContainer.find("input:checked").each(function () {
-              var key = $(this).attr("name");
-              if (key && request_rate_datasets[key])
-                  data1.push(request_rate_datasets[key]);
-                if (key && response_time_datasets[key])
-                    data2.push(response_time_datasets[key]);
-          });
-
-          if (data1.length > 0)
-              $.plot($("#request_rate"), data1, default_graph_options);
-
-
-          if (data2.length > 0)
-              $.plot($("#response_time"), data2, default_graph_options);
-      }
-
-      plotAccordingToChoices();
-      $.plot($("#max_request_rate"), max_request_rate_datasets, $.merge({series: {lines: {show: false}, bars : {show: true}}}, default_graph_options));
-  </script>
   </body>
-  </html>
+</html>

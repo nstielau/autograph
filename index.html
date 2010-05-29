@@ -1,4 +1,27 @@
 ---
 layout: default
 ---
-          Ideally, this graph would be a straight line at 45 degrees; for every request that is sent to the server, it accepts a connection, regardless of how many concurrent requests are made.  Realistically, this graph will start linear and degrade as network or software bottlenecks are hit. The point at which this graph breaks linearity indicates the maximum possible concurrent requests the system can successfully serve.
+<h3>What is Autograph?</h3>
+<p>
+Autograph is a load testing tool that spits out easy to understand HTML reports.  Autograph aims to be the easiest way to get a peek at how your app responds to load.
+</p>
+
+<h3>Features</h3>
+<p>
+  <ul class="alist">
+    <li>Bulit on the powerful httperf tool</li>
+    <li>Generates sexy reports</li>
+    <li>Simple to use</li>
+  </ul>
+</p>
+
+<h3>Limitations</h3>
+<p>
+  Autograph's testing strategy is rather basic: slam the specified URLs with GETs, and see how they respond.  Here are a few things autograph does NOT do:
+  <ul>
+    <li>Handle POST, HEAD, PUT, DELETE requests</li>
+    <li>Test with specified user-scenarios</li>
+    <li>Apply load from multiple servers</li>
+    <li>Your laundry</li>
+  </ul>
+</p>

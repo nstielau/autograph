@@ -28,16 +28,16 @@
     <div id="post">
         <div id="main">
           <div id="graphs" class="section section_graphs">
-          
+
             <h2>Demanded vs. Achieved Request Rate (r/s)</h2>
             <div class="flot-graph" id="request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
-          
+
             <h2>Demanded Request Rate (r/s) vs. Response Time</h2>
             <div class="flot-graph" id="response_time" style="width:600px;height:300px;padding-bottom: 25px;"></div>
-          
+
             <h2>Maximum Achieved Request Rate</h2>
             <div class="flot-graph" id="max_request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
-          
+
           </div>
 
       <div id="graph_discussion" class="section section_discussion" style="display:none;">
@@ -64,7 +64,7 @@
         </p>
       </div>
       <div id="tables" class="section section_tables" style="display:none;">
-          
+
             <div id="page_/page2" class='report' >
               <h2>Results for http://127.0.0.1/page2</h2>
               <div class="table_data" style="padding-bottom: 25px;">
@@ -172,7 +172,7 @@
 
               </div>
             </div>
-          
+
             <div id="page_/" class='report' >
               <h2>Results for http://127.0.0.1/</h2>
               <div class="table_data" style="padding-bottom: 25px;">
@@ -280,7 +280,7 @@
 
               </div>
             </div>
-          
+
             <div id="page_/page1" class='report' >
               <h2>Results for http://127.0.0.1/page1</h2>
               <div class="table_data" style="padding-bottom: 25px;">
@@ -388,13 +388,19 @@
 
               </div>
             </div>
-          
+
         </div>
       </div>
     </div><!--end post-->
   </div><!--end content-->
   <div id="sidebar">
     <ul>
+      <li class="widget widget_recent_entries">
+        <h2 class="widgettitle">Autograph</h2>
+        <ul>
+          <li><a href="./index.html">Autograph Home</a></li>
+        </ul>
+      </li>
       <li class="widget widget_recent_entries">
         <h2 class="widgettitle">Report Sections</h2>
         <ul>
@@ -407,7 +413,7 @@
         <h2 class="widgettitle">Tested Pages</h2>
         <div id="choices"></div>
       </li>
-      
+
     </ul>
   </div><!--end sidebar-->
     <div id="footer">
@@ -488,20 +494,20 @@
       });
 
       var request_rate_datasets = {
-  '1' : {label:  "Request rate for '/page2'", data: [[0.0, 28.8], [10.0, 25.8], [20.0, 28.0], [30.0, 25.8], [40.0, 22.2], [50.0, 21.5], [60.0, 27.4], [70.0, 22.2], [80.0, 22.7], [90.0, 5.0]]}, 
-'2' : {label:  "Request rate for '/'", data: [[0.0, 24.7], [10.0, 27.4], [20.0, 22.2], [30.0, 25.8], [40.0, 5.0], [50.0, 28.0], [60.0, 27.9], [70.0, 27.4], [80.0, 24.7], [90.0, 21.5]]}, 
+  '1' : {label:  "Request rate for '/page2'", data: [[0.0, 28.8], [10.0, 25.8], [20.0, 28.0], [30.0, 25.8], [40.0, 22.2], [50.0, 21.5], [60.0, 27.4], [70.0, 22.2], [80.0, 22.7], [90.0, 5.0]]},
+'2' : {label:  "Request rate for '/'", data: [[0.0, 24.7], [10.0, 27.4], [20.0, 22.2], [30.0, 25.8], [40.0, 5.0], [50.0, 28.0], [60.0, 27.9], [70.0, 27.4], [80.0, 24.7], [90.0, 21.5]]},
 '3' : {label:  "Request rate for '/page1'", data: [[0.0, 28.0], [10.0, 27.9], [20.0, 22.7], [30.0, 23.0], [40.0, 21.5], [50.0, 23.0], [60.0, 22.2], [70.0, 21.5], [80.0, 28.8], [90.0, 21.5]]}
       };
 
       var response_time_datasets = {
-  '1' : {label:  "Response time for '/page2'", data: [[0.0, 711.1], [10.0, 727.1], [20.0, 711.1], [30.0, 686.9], [40.0, 130.7], [50.0, 870.0], [60.0, 893.7], [70.0, 438.3], [80.0, 132.7], [90.0, 686.9]]}, 
-'2' : {label:  "Response time for '/'", data: [[0.0, 661.3], [10.0, 727.1], [20.0, 739.4], [30.0, 739.4], [40.0, 739.4], [50.0, 711.1], [60.0, 438.3], [70.0, 870.0], [80.0, 438.3], [90.0, 870.0]]}, 
+  '1' : {label:  "Response time for '/page2'", data: [[0.0, 711.1], [10.0, 727.1], [20.0, 711.1], [30.0, 686.9], [40.0, 130.7], [50.0, 870.0], [60.0, 893.7], [70.0, 438.3], [80.0, 132.7], [90.0, 686.9]]},
+'2' : {label:  "Response time for '/'", data: [[0.0, 661.3], [10.0, 727.1], [20.0, 739.4], [30.0, 739.4], [40.0, 739.4], [50.0, 711.1], [60.0, 438.3], [70.0, 870.0], [80.0, 438.3], [90.0, 870.0]]},
 '3' : {label:  "Response time for '/page1'", data: [[0.0, 661.3], [10.0, 591.9], [20.0, 727.1], [30.0, 661.3], [40.0, 870.0], [50.0, 180.4], [60.0, 661.3], [70.0, 893.7], [80.0, 132.7], [90.0, 870.0]]}
       };
 
           var max_request_rate_datasets = [
-      {label:  "Max Request Rate for '/page2'", data: [[0, 28.0]]}, 
-{label:  "Max Request Rate for '/'", data: [[1, 28.0]]}, 
+      {label:  "Max Request Rate for '/page2'", data: [[0, 28.0]]},
+{label:  "Max Request Rate for '/'", data: [[1, 28.0]]},
 {label:  "Max Request Rate for '/page1'", data: [[2, 28.0]]}
           ];
 

@@ -619,9 +619,9 @@ ol.pinglist {
 #footer a:hover { color: #772124; }
 
 
-//////////////////////////////////////
+/*/////////////////////////////////////
 // Autograph overrides
-//////////////////////////////////////
+/////////////////////////////////////*/
 
 div#post ul {list-style: disc; font-size: 1.3em; padding-left: 25px; padding-bottom: 25px;}
 div#post p {font-size: 1.4em; padding-bottom: 15px;}
