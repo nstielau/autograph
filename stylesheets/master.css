@@ -1,15 +1,15 @@
-/*  
+/*
   READ THIS PLEASE!!
-  
+
   You DO NOT want to make edits to this file.
-  If you make edits to this file your layout will break 
+  If you make edits to this file your layout will break
   when you upgrade the theme.
-  
+
   Instead add your custom CSS to the style.css file
-  in a Child Theme. Any new styles you add to the style.css in 
-  your Child Theme will automatically override this 
-  imported stylesheet.  
-  
+  in a Child Theme. Any new styles you add to the style.css in
+  your Child Theme will automatically override this
+  imported stylesheet.
+
   This will also make your life a whole
   lot easier when it comes time to upgrade the theme.
 */
@@ -23,7 +23,7 @@ ul,ol,dl,li,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,inp
 a img,:link img,:visited img {border: none;}
 address {font-style: normal;}
 
-/*Body & Links 
+/*Body & Links
 ------------------------------------------------------------ */
 body {
   font-size: 62.5%;
@@ -44,13 +44,13 @@ a:hover {
   margin: 0 auto;
   text-align: left;
 }
-#content { 
-  float: left; 
+#content {
+  float: left;
   width: 600px;
   padding: 20px 30px 20px 0;
 }
-#sidebar { 
-  float: right; 
+#sidebar {
+  float: right;
   width: 300px;
   padding-bottom: 20px;
 }
@@ -59,9 +59,9 @@ a:hover {
   width: 140px;
 }
 .spad { padding-right: 20px; }
-#footer { 
+#footer {
   clear: both;
-  padding-top: 5px; 
+  padding-top: 5px;
   border-top: 1px solid #eee;
 }
 .clear:after, li.comment:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
@@ -130,8 +130,8 @@ h1#title a:hover, div#title a:hover { color: #772124; text-decoration: none; }
   border-bottom: 4px double #eee;
   padding-bottom: 7px;
 }
-.post-header h1, .post-header h2 { 
-  font-size: 2.6em; 
+.post-header h1, .post-header h2 {
+  font-size: 2.6em;
   line-height: 1.1em;
 	font-weight: normal;
 }
@@ -181,8 +181,8 @@ h1#title a:hover, div#title a:hover { color: #772124; text-decoration: none; }
   font-style: normal;
 }
 .meta a:hover { color: #772124; }
-.tags { 
-  float: right; 
+.tags {
+  float: right;
   width: 400px;
   text-align: right;
   font-style: italic;
@@ -195,7 +195,7 @@ h1#title a:hover, div#title a:hover { color: #772124; text-decoration: none; }
 .entry p { margin-bottom: 10px; }
 .entry p.notice {
   padding: 15px;
-  background-color: #fffbcc; 
+  background-color: #fffbcc;
   border: 1px solid #f8f4c7;
 }
 .alert-box p { margin: 10px 0 0 0; }
@@ -203,11 +203,11 @@ h1#title a:hover, div#title a:hover { color: #772124; text-decoration: none; }
   font-size: 1.3em;
   padding: 15px 0 5px 0;
 }
-.entry h3 { 
+.entry h3 {
   padding-top: 10px;
   font-size: 1em;
 }
-.entry h4 { 
+.entry h4 {
   padding-top: 10px;
   font-size: .9em;
 }
@@ -219,7 +219,7 @@ pre {
   background-color: #f3f3f3;
   color: #000;
 }
-code { 
+code {
   padding: 2px 3px;
   font: 1.1em Consolas, Courier New, sans-serif;
   background-color: #f3f3f3;
@@ -244,12 +244,12 @@ blockquote {
   background: url(../images/list-star.gif) no-repeat 0 .3em;
 }
 .entry ol, .c-body ol { margin: 0 0 15px 30px; }
-.entry ol li ol li, .c-body ol li ol li { 
+.entry ol li ol li, .c-body ol li ol li {
   font-size: .9em;
-  list-style-type: lower-roman; 
+  list-style-type: lower-roman;
 }
-.entry ol li, .c-body ol li { 
-  margin: 10px 0 0 0; 
+.entry ol li, .c-body ol li {
+  margin: 10px 0 0 0;
   list-style-type: decimal;
   list-style-position: outside;
 }
@@ -297,12 +297,12 @@ blockquote {
 }
 .entry .highlight-box ul li {
   font-size: 1.1em;
-  background: url(../images/list-square.gif) no-repeat 0 .4em; 
+  background: url(../images/list-square.gif) no-repeat 0 .4em;
 }
-.entry .highlight-box h2, .entry .highlight-box h3, .entry .highlight-box h4 { 
-  margin: 0; 
+.entry .highlight-box h2, .entry .highlight-box h3, .entry .highlight-box h4 {
+  margin: 0;
   padding: 0;
-  color: #fff; 
+  color: #fff;
 }
 .highlight-box h2 { text-transform: uppercase; }
 /*Post Footer
@@ -336,9 +336,9 @@ img.archive-comment {
   float: right;
   margin: 0 .5em .5em 0;
 }
-.entries { 
+.entries {
   font-size: 1.3em;
-  clear: both; 
+  clear: both;
 }
 .entries ul {
   margin: 0;
@@ -374,13 +374,13 @@ img.archive-comment {
   margin-right: .5em;
   width: 3em;
   color: #666;
-} 
+}
 /*Sidebar
 ------------------------------------------------------------ */
 #sidebar-image { padding-top: 20px; }
-#sidebar-image { font-size: 1.3em; } 
-#sidebar-image p { 
-  margin-bottom: 15px; 
+#sidebar-image { font-size: 1.3em; }
+#sidebar-image p {
+  margin-bottom: 15px;
   line-height: 1.6em;
 }
 h2.widgettitle {
@@ -396,13 +396,13 @@ ul li.widget ul {
   margin: 0;
   font-size: 1.4em;
 }
-ul li.widget ul li ul { 
+ul li.widget ul li ul {
   margin-left: 5px;
-  font-size: 1em; 
+  font-size: 1em;
 }
-ul li.widget ul li { 
+ul li.widget ul li {
   padding: 8px 0;
-  border-bottom: 1px solid #eee; 
+  border-bottom: 1px solid #eee;
 }
 ul li.widget ul li ul li { border-bottom: none; }
 ul li.widget ul li a {
@@ -439,16 +439,16 @@ li.widget select { margin-top: 10px; }
   padding: 0 0 0 25px;
   background: url(../images/mail-icon.png) no-repeat 0 .4em;
 }
-#rss-feed a.twitter { 
+#rss-feed a.twitter {
   margin-right: 0;
-  padding-left: 19px; 
-  background: url(../images/twitter-icon.png) no-repeat 0 .15em; 
+  padding-left: 19px;
+  background: url(../images/twitter-icon.png) no-repeat 0 .15em;
 }
 /*Search Box
 ---------------------------------------*/
 #search_form input { margin: 10px 0 0 0; }
-#search_form input { 
-  padding: 4px 2px; 
+#search_form input {
+  padding: 4px 2px;
   width: 132px;
   border: 2px solid #acacac;
   border-bottom: 1px solid #ccc;
@@ -485,7 +485,7 @@ div.c-grav {
   float: left;
   width: 60px;
   margin: 0;
-  text-align: right;  
+  text-align: right;
 }
 div.c-grav img {
   border: 4px solid #e3e3e3;
@@ -564,15 +564,15 @@ input#author, input#email, input#url { width: 350px; }
 form#commentform input:focus, form#commentform textarea:focus { background: #fff; }
 form#commentform input#submit {
   padding: 5px;
-  width: 150px; 
+  width: 150px;
 }
 form#commentform p.guidelines {
   margin: 10px 0;
   font-size: .8em;
   color: #777;
 }
-p.subscribe-to-comments, p.comments-rss { 
-  margin: 0 0 10px 0; 
+p.subscribe-to-comments, p.comments-rss {
+  margin: 0 0 10px 0;
   font-size: .9em;
 }
 p.comments-rss a {
@@ -617,3 +617,13 @@ ol.pinglist {
 #footer p.right { float: right; }
 #footer a:link, #footer a:visited { color: #666; text-decoration: underline; }
 #footer a:hover { color: #772124; }
+
+
+//////////////////////////////////////
+// Autograph overrides
+//////////////////////////////////////
+div#post ul {list-style: disc; font-size: 1.3em; padding-left: 25px; padding-bottom: 25px;}
+div#post p {font-size: 1.4em; padding-bottom: 15px;}
+div#post h2 {font-size: 2.15em; padding-bottom: 15px;}
+div#post h3 {font-size: 1.75em; }
+div#post h4 {font-size: 1.55em; font-weight: bold;}
