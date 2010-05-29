@@ -227,7 +227,7 @@
       $.each(request_rate_datasets, function(key, val) {
           choiceContainer.append('<br/><input type="checkbox" name="' + key +
                                  '" checked="checked" id="id' + key + '">' +
-                                 '<label for="id' + key + '">'
+                                 '<label style="font-size: 1.5em; padding-left: 10px;" for="id' + key + '">'
                                   + val.label.replace("Request rate for ", "") + '</label>');
       });
       choiceContainer.find("input").click(plotAccordingToChoices);
