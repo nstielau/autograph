@@ -4,11 +4,7 @@
 
 Autograph drives httperf, varying the request rate and graphing the output.  This exercise provides graphical data showing how the requested resources hold up under an increasing rate, particularly with request to response time and achieved request rate.
 
-Can work with SOAP.
-
 == NOTES:
-
-A note on stats, from Zed Shaw: http://zedshaw.com/essays/programmer_stats.html
 
 Start off with broad ranges and zero in on rate/call/connection limits
 Run from a server, not your laptop, you don't want to be limited by your internet connection.
@@ -23,46 +19,6 @@ Run from a server, not your laptop, you don't want to be limited by your interne
   autograph --host example.com --low-rate 5 --high-rate 25 --rate-step 5 --num-conns 25
 
   autograph --host example.com --low-rate 10 --high-rate 50 --rate-step 10 --output-file my_load_test.html
-
-== INSTALL:
-
-* Get httperf installed ('brew install httperf' if you've got homebrew installed)
-* Download project and run 'rake build install'
-
-  nick-stielaus-computer-3:autograph nick$ httperf -h
-  Usage: httperf [-hdvV] [--add-header S] [--burst-length N] [--client N/N]
-    [--close-with-reset] [--debug N] [--failure-status N]
-    [--help] [--hog] [--http-version S] [--max-connections N]
-    [--max-piped-calls N] [--method S] [--no-host-hdr]
-    [--num-calls N] [--num-conns N] [--period [d|u|e]T1[,T2]]
-    [--port N] [--print-reply [header|body]] [--print-request [header|body]]
-    [--rate X] [--recv-buffer N] [--retry-on-failure] [--send-buffer N]
-    [--server S] [--server-name S] [--session-cookies]
-    [--ssl] [--ssl-ciphers L] [--ssl-no-reuse]
-    [--think-timeout X] [--timeout X] [--uri S] [--verbose] [--version]
-    [--wlog y|n,file] [--wsess N,N,X] [--wsesslog N,X,file]
-    [--wset N,X]
-  nick-stielaus-computer-3:autograph nick$ autograph
-  Usage: autograph [options]
-          --host HOST                  The host to load test
-          --port PORT                  The port to load test
-          --uris PATH,PATH             A comma separated list of pages to cycle through
-          --output-file PATH           Specify the file to output to.
-          --output-dir PATH            Specify a directory to write output files to.
-          --notes NOTES                Notes to be written to the report.
-          --test                       Do not run benchmarks. Use test data to generate reports.
-  Httperf Knobs:
-          --timeout SECONDS            The length in seconds before a request is marked as errored
-          --num-call NUMCALLS          The number of calls to make for each connection in the test (defaults to one).
-          --num-conns NUMCONNS         The number of connections to make for each test
-          --low-rate LOWRATE           The starting rate
-          --high-rate HIGHRATE         The highest rate at which to perform a test
-          --rate-step RATESTEP         The ammount at which to increment the rate for each interation of the test
-          --wsesslog PATH              Path to the wsesslog file.
-  Common options:
-      -h, --help                       Displays this help info
-      -v, --verbose                    Verbose output
-
 
 == THANKS:
 
@@ -82,7 +38,6 @@ http://www.hpl.hp.com/research/linux/httperf/
 
 
 == LICENSE:
-
 
 Autograph
 Copyright (c) 2009 Nick Stielau
