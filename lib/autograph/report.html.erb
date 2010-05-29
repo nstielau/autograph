@@ -58,7 +58,6 @@
         </p>
       </div>
       <div id="tables" class="section section_tables" style="display:none;">
-        <h2>Report Tables</h2>
           <% reports.each do |uri, report| %>
             <div id="page_<%= uri %>" class='report' >
               <h2>Results for <%= "http://#{host}#{uri}" %></h2>
