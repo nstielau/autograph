@@ -17,7 +17,14 @@
 # Trap exit and write output to file? (Can you have two traps?)
 
 # Skinning
-  Increase text size
+  Improve checkbox #choices styles
   Improve table styles
-  Put real connection/timeout etc. values in discussion.
+
+# Put real connection/timeout etc. values in discussion.
+
+
+# Docs
+  Add EC2 instructions
+
+# Add gh-pages with graphs
 
