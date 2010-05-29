@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Autograph report for 127.0.0.1</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="http://nstielau.github.com/autograph/stylesheets/images/favicon.ico" />
+  <!--Stylesheets-->
+  <link href="http://nstielau.github.com/autograph/stylesheets/master.css" type="text/css" media="screen" rel="stylesheet" />
+  <!--[if lt IE 8]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie.css" /><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie6.css" /><![endif]-->
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header" class="clear">
+      <h1 id="title">Autograph report for 127.0.0.1</h1>
+      <div id="description">
+        <h2>Created at Sat May 29 10:20:18 -0700 2010</h2>
+      </div><!--end description-->
+      <div id="nav">
+        <ul>
+        </ul>
+      </div><!--end nav-->
+    </div><!--end header-->
+    <div id="content" class="pad">
+    <div id="post">
+        <div id="main">
+          <div id="graphs" class="section section_graphs">
+          
+            <h2>Demanded vs. Achieved Request Rate (r/s)</h2>
+            <div class="flot-graph" id="request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+          
+            <h2>Demanded Request Rate (r/s) vs. Response Time</h2>
+            <div class="flot-graph" id="response_time" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+          
+            <h2>Maximum Achieved Request Rate</h2>
+            <div class="flot-graph" id="max_request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+          
+          </div>
+
+      <div id="graph_discussion" class="section section_discussion" style="display:none;">
+        <h2>Methods</h2>
+        <p>
+          Use <a href="http://www.hpl.hp.com/research/linux/httperf/">httperf</a> to load different pages a fixed number of times, at a fixed rate, and record the response time and rate at which connections are accepted.  By varying the rate, we can see how the response time and connection rate are effected by increased load on the server.  Unlike log analysis, which relies on extrapolation to guess at maximum requests/second, Autograph actually stresses the system and yields real-world results.
+        </p>
+        <h2>Goals</h2>
+        <p>
+          Autograph will help you
+          <ul style="list-style: disc; font-size: 1.3em; padding-left: 25px; padding-bottom: 25px;">
+            <li>Compare the relative 'weight' of different pages, hopefully pointing you to which pages need more some caching or other form of optimization.</li>
+            <li>Determine rough maximum request rates that either a) block other calls, or b) increase response time beyond an acceptable limit.</li>
+          </ul>
+        </p>
+        <h2>Graphs</h2>
+        <h4>Demanded vs. Achieved request rate</h4>
+        <p>
+        Ideally, this graph would be a straight line at 45 degrees; for every request that is sent to the server, it accepts a connection, regardless of how many concurrent requests are made.  Realistically, this graph will start linear and degrade as network or software bottlenecks are hit. The point at which this graph breaks linearity indicates the maximum possible concurrent requests the system can successfully serve.
+        </p>
+        <h4>Demanded Request Rate vs. response time</h4>
+        <p>
+        Ideally, this graph would be flat and low, indicating consistent and fast responses times.  Realistically, this graph will either be slightly angled or flat followed by a dramatic uptick.  The point at which the response times dramatically increase will coincide with the point at which it cannot serve all requests.
+        </p>
+      </div>
+      <div id="tables" class="section section_tables" style="display:none;">
+          
+            <div id="page_/page2" class='report' >
+              <h2>Results for http://127.0.0.1/page2</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>28.8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>711.1</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>25.8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>727.1</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>28.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>711.1</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>25.8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>686.9</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>22.2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>130.7</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>21.5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>870.0</td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>27.4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>893.7</td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>22.2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>438.3</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>22.7</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>132.7</td>
+  </tr>
+  <tr>
+    <td>90</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>686.9</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+          
+            <div id="page_/" class='report' >
+              <h2>Results for http://127.0.0.1/</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>24.7</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>661.3</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>27.4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>727.1</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>22.2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>739.4</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>25.8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>739.4</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>739.4</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>28.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>711.1</td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>27.9</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>438.3</td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>27.4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>870.0</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>24.7</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>438.3</td>
+  </tr>
+  <tr>
+    <td>90</td>
+    <td>21.5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>870.0</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+          
+            <div id="page_/page1" class='report' >
+              <h2>Results for http://127.0.0.1/page1</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>28.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>661.3</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>27.9</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>591.9</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>22.7</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>727.1</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>23.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>661.3</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>21.5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>870.0</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>23.0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>180.4</td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>22.2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>661.3</td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>21.5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>893.7</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>28.8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>132.7</td>
+  </tr>
+  <tr>
+    <td>90</td>
+    <td>21.5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>100</td>
+    <td>870.0</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </div><!--end post-->
+  </div><!--end content-->
+  <div id="sidebar">
+    <ul>
+      <li class="widget widget_recent_entries">
+        <h2 class="widgettitle">Report Sections</h2>
+        <ul>
+          <li><a href="#" onclick="show_section('graphs');">Graphs</a></li>
+          <li><a href="#" onclick="show_section('tables');">Tables</a></li>
+          <li><a href="#" onclick="show_section('discussion');">Discussion</a></li>
+        </ul>
+      </li>
+      <li class="section section_graphs">
+        <h2 class="widgettitle">Tested Pages</h2>
+        <div id="choices"></div>
+      </li>
+      
+    </ul>
+  </div><!--end sidebar-->
+    <div id="footer">
+      <p class="right">Generated fearlessly with <a href="http://nstielau.github.com/autograph">Autograph</a></p>
+      <p>Theme modified from "Vigilance Theme" by <a href="http://thethemefoundry.com">The Theme Foundry</a></p>
+    </div><!--end footer-->
+  </div><!--end wrapper-->
+    <script language="javascript" type="text/javascript">
+    function show_section(name) {
+      $('.section').hide();
+      $('.section_' + name).show();
+    }
+
+      var acolor;
+      var default_graph_options = {
+        series: {
+          lines: { show: true, lineWidth: 3 },
+          points: { show: true, radius: 4 }
+        },
+        legend: {
+          show: true,
+          backgroundColor: '#FFF',
+          backgroundOpacity: 0.9
+        },
+        series: {
+          lines: { show: true, lineWidth: 3 },
+          points: { show: true, fill: false },
+          shadowSize: 0,
+        },
+        xaxis: {},
+        yaxis: {
+          show: true,
+        },
+        grid: {
+          show: true,
+          backgroundColor: null,
+          borderWidth: 2,
+          hoverable: true,
+          tickColor: "#E1E8F0",
+        },
+        colors: ["#5bba47","#d86b6d","#3d8aea","#333333"]
+      };
+
+      // Callback function to show the tooltip
+      function showTooltip(item) {
+        var contents = "(" + item.datapoint[1] + "," + item.datapoint[0] + ")";
+        var x = item.pageX;
+        var y = item.pageY - 10;
+
+        var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
+          padding: '5px',
+          position: 'absolute',
+          minWidth: '5em',
+          display: 'block',
+          top:  y+5,
+          left: x+5,
+          zIndex: 9999
+        });
+
+        obj.appendTo('body').fadeIn('200');
+      }
+
+      // Var to hold our previous point
+      var previousPoint = null;
+
+      // Bind to the plothover so we can show a tooltip
+      $(".flot-graph").bind("plothover", function (event, pos, item) {
+        if (item) {
+          if (previousPoint != item.datapoint) {
+            previousPoint = item.datapoint;
+            $("#flot-tooltip").remove();
+            showTooltip(item);
+          }
+        } else {
+          $('#flot-tooltip').remove().fadeOut('200');
+          previousPoint = null;
+        }
+      });
+
+      var request_rate_datasets = {
+  '1' : {label:  "Request rate for '/page2'", data: [[0.0, 28.8], [10.0, 25.8], [20.0, 28.0], [30.0, 25.8], [40.0, 22.2], [50.0, 21.5], [60.0, 27.4], [70.0, 22.2], [80.0, 22.7], [90.0, 5.0]]}, 
+'2' : {label:  "Request rate for '/'", data: [[0.0, 24.7], [10.0, 27.4], [20.0, 22.2], [30.0, 25.8], [40.0, 5.0], [50.0, 28.0], [60.0, 27.9], [70.0, 27.4], [80.0, 24.7], [90.0, 21.5]]}, 
+'3' : {label:  "Request rate for '/page1'", data: [[0.0, 28.0], [10.0, 27.9], [20.0, 22.7], [30.0, 23.0], [40.0, 21.5], [50.0, 23.0], [60.0, 22.2], [70.0, 21.5], [80.0, 28.8], [90.0, 21.5]]}
+      };
+
+      var response_time_datasets = {
+  '1' : {label:  "Response time for '/page2'", data: [[0.0, 711.1], [10.0, 727.1], [20.0, 711.1], [30.0, 686.9], [40.0, 130.7], [50.0, 870.0], [60.0, 893.7], [70.0, 438.3], [80.0, 132.7], [90.0, 686.9]]}, 
+'2' : {label:  "Response time for '/'", data: [[0.0, 661.3], [10.0, 727.1], [20.0, 739.4], [30.0, 739.4], [40.0, 739.4], [50.0, 711.1], [60.0, 438.3], [70.0, 870.0], [80.0, 438.3], [90.0, 870.0]]}, 
+'3' : {label:  "Response time for '/page1'", data: [[0.0, 661.3], [10.0, 591.9], [20.0, 727.1], [30.0, 661.3], [40.0, 870.0], [50.0, 180.4], [60.0, 661.3], [70.0, 893.7], [80.0, 132.7], [90.0, 870.0]]}
+      };
+
+          var max_request_rate_datasets = [
+      {label:  "Max Request Rate for '/page2'", data: [[0, 28.0]]}, 
+{label:  "Max Request Rate for '/'", data: [[1, 28.0]]}, 
+{label:  "Max Request Rate for '/page1'", data: [[2, 28.0]]}
+          ];
+
+      // hard-code color indices to prevent them from shifting as
+      // countries are turned on/off
+      var i = 0;
+      $.each(request_rate_datasets, function(key, val) {
+          val.color = i;
+          ++i;
+      });
+      i = 0;
+      $.each(response_time_datasets, function(key, val) {
+          val.color = i;
+          ++i;
+      });
+
+      // insert checkboxes
+      var choiceContainer = $("#choices");
+      $.each(request_rate_datasets, function(key, val) {
+          choiceContainer.append('<br/><input type="checkbox" name="' + key +
+                                 '" checked="checked" id="id' + key + '">' +
+                                 '<label style="font-size: 1.5em; padding-left: 10px;" for="id' + key + '">'
+                                  + val.label.replace("Request rate for ", "") + '</label>');
+      });
+      choiceContainer.find("input").click(plotAccordingToChoices);
+
+
+      function plotAccordingToChoices() {
+          var data1 = [];
+          var data2 = [];
+
+          choiceContainer.find("input:checked").each(function () {
+              var key = $(this).attr("name");
+              if (key && request_rate_datasets[key])
+                  data1.push(request_rate_datasets[key]);
+                if (key && response_time_datasets[key])
+                    data2.push(response_time_datasets[key]);
+          });
+
+          if (data1.length > 0)
+              $.plot($("#request_rate"), data1, default_graph_options);
+
+
+          if (data2.length > 0)
+              $.plot($("#response_time"), data2, default_graph_options);
+      }
+
+      plotAccordingToChoices();
+      $.plot($("#max_request_rate"), max_request_rate_datasets, $.merge({series: {lines: {show: false}, bars : {show: true}}}, default_graph_options));
+  </script>
+  </body>
+  </html>
