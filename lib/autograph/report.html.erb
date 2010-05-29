@@ -35,12 +35,11 @@
           </div>
 
       <div id="graph_discussion" class="section section_discussion" style="display:none;">
-        <h2>Discussion</h2>
-        <h3>Methods</h3>
+        <h2>Methods</h2>
         <p>
           Use <a href="http://www.hpl.hp.com/research/linux/httperf/">httperf</a> to load different pages a fixed number of times, at a fixed rate, and record the response time and rate at which connections are accepted.  By varying the rate, we can see how the response time and connection rate are effected by increased load on the server.  Unlike log analysis, which relies on extrapolation to guess at maximum requests/second, Autograph actually stresses the system and yields real-world results.
         </p>
-        <h3>Goals</h3>
+        <h2>Goals</h2>
         <p>
           Autograph will help you
           <ul>
@@ -48,7 +47,7 @@
             <li>Determine rough maximum request rates that either a) block other calls, or b) increase response time beyond an acceptable limit.</li>
           </ul>
         </p>
-        <h3>Graphs</h3>
+        <h2>Graphs</h2>
         <h4>Demanded vs. Achieved request rate</h4>
         <p>
         Ideally, this graph would be a straight line at 45 degrees; for every request that is sent to the server, it accepts a connection, regardless of how many concurrent requests are made.  Realistically, this graph will start linear and degrade as network or software bottlenecks are hit. The point at which this graph breaks linearity indicates the maximum possible concurrent requests the system can successfully serve.
