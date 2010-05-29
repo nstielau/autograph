@@ -628,3 +628,7 @@ div#post p {font-size: 1.4em; padding-bottom: 15px;}
 div#post h2 {font-size: 2.15em; padding-bottom: 15px;}
 div#post h3 {font-size: 1.75em; }
 div#post h4 {font-size: 1.55em; font-weight: bold;}
+
+div.table_data table {width: 100%; border: 1px solid black; border-collapse:collapse;}
+div.table_data table td {font-size: 1.5em;}
+div.table_data table th {font-size: 1.5em; border-bottom: 1px solid black;}
