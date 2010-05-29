@@ -98,4 +98,34 @@ class TestGraphSeries < Test::Unit::TestCase
     assert_equal t.rows[1], two
     assert_equal t.rows[2], three
   end
+
+  def test_to_s
+    tables = []
+    one   = {:column_a => 1, :column_b => 222}
+    two   = {:column_a => 11, :column_b => 22}
+    three = {:column_a => 111, :column_b => 2}
+    t = Table.new(COLUMN_NAMES)
+    t << one
+    t << two
+    t << three
+    tables << t
+    one   = {:column_a => 1, :column_b => 222, :col_c => 1222}
+    two   = {:column_a => 11, :column_b => 22}
+    three = {:column_a => 111, :column_b => 2}
+    t = Table.new([COLUMN_NAMES, [:col_c]].flatten)
+    t << one
+    t << two
+    t << three
+    tables << t
+    tables.each do |table|
+      # puts
+      # puts table.to_s
+      length = nil
+      assert table.to_s.split("\n").size > 3
+      table.to_s.split("\n").each do |l|
+        assert_equal length, l.length if length
+        length = l.length
+      end
+    end
+  end
 end

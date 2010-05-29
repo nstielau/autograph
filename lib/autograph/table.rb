@@ -36,4 +36,31 @@ class Table
     html << "</table>\n"
     html
   end
+
+  def to_s
+    width = 20
+    s = ""
+    html = "-"
+    html << "-"*@column_names.size*width;
+    html << "\n"
+    html << "|"
+    @column_names.each do |key|
+      html << sprintf("%#{width-2}s", key)
+      html << " |"
+    end
+    html << "\n"
+    html << "-"
+    html << "-"*@column_names.size*width;
+    html << "\n"
+    rows.each do |r|
+      html << "|"
+      @column_names.each do |key|
+        html << "#{sprintf("%#{width-2}s", r[key.to_sym])} |"
+      end
+        html << "\n"
+    end
+    html << "-"
+    html <<"-"*@column_names.size*width;
+    html
+  end
 end
