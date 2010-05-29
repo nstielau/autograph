@@ -17,7 +17,6 @@
 # Trap exit and write output to file? (Can you have two traps?)
 
 # Skinning
-  Improve checkbox #choices styles
   Improve table styles
 
 # Put real connection/timeout etc. values in discussion.
