@@ -228,7 +228,7 @@
           choiceContainer.append('<br/><input type="checkbox" name="' + key +
                                  '" checked="checked" id="id' + key + '">' +
                                  '<label for="id' + key + '">'
-                                  + val.label + '</label>');
+                                  + val.label.replace("Request rate for ", "") + '</label>');
       });
       choiceContainer.find("input").click(plotAccordingToChoices);
 
