@@ -9,10 +9,8 @@
     <link href="http://nstielau.github.com/autograph/stylesheets/master.css" type="text/css" media="screen" rel="stylesheet" /><!--[if lt IE 8]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie.css" /><![endif]-->
     <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie6.css" /><![endif]-->
 
-    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js">
-</script>
-    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js">
-</script>
+    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
+    <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -50,7 +48,7 @@
               <p>
                 Autograph will help you
               </p>
-              <ul>
+              <ul style="list-style: disc; font-size: 1.3em; padding-left: 25px; padding-bottom: 25px;">
                 <li>Compare the relative 'weight' of different pages, hopefully pointing you to which pages need more some caching or other form of optimization.
                 </li>
                 <li>Determine rough maximum request rates that either a) block other calls, or b) increase response time beyond an acceptable limit.
@@ -77,10 +75,13 @@
                 Report Tables
               </h2><% reports.each do |uri, report| %>
               <div id="page_&lt;%= uri %&gt;" class='report'>
-                <p>
+                <h4>
                   Test data for <%= "http://#{host}#{uri}" %>
-                </p><%= report.to_html %>
-              </div><% end %>
+                </h4>
+                <div class="data_table">
+                  <%= report.to_html %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div><!--end post-->
