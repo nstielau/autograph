@@ -1,0 +1,848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Autograph report for ec2-184-73-66-101.compute-1.amazonaws.com</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="http://nstielau.github.com/autograph/stylesheets/images/favicon.ico" />
+  <!--Stylesheets-->
+  <link href="http://nstielau.github.com/autograph/stylesheets/master.css" type="text/css" media="screen" rel="stylesheet" />
+  <!--[if lt IE 8]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie.css" /><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="screen" href="http://nstielau.github.com/autograph/stylesheets/ie6.css" /><![endif]-->
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.js"></script>
+  <script type="text/javascript" src="http://nstielau.github.com/autograph/js/jquery.flot.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header" class="clear">
+      <h1 id="title">Autograph report for ec2-184-73-66-101.compute-1.amazonaws.com</h1>
+      <div id="description">
+        <h2>Created at Sat May 29 23:21:31 +0000 2010</h2>
+      </div><!--end description-->
+      <div id="nav">
+        <ul>
+        </ul>
+      </div><!--end nav-->
+    </div><!--end header-->
+    <div id="content" class="pad">
+    <div id="post">
+        <div id="main">
+          <div id="graphs" class="section section_graphs">
+
+            <h2>Demanded vs. Achieved Request Rate (r/s)</h2>
+            <div class="flot-graph" id="request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+
+            <h2>Demanded Request Rate (r/s) vs. Response Time</h2>
+            <div class="flot-graph" id="response_time" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+
+            <h2>Maximum Achieved Request Rate</h2>
+            <div class="flot-graph" id="max_request_rate" style="width:600px;height:300px;padding-bottom: 25px;"></div>
+
+          </div>
+
+      <div id="graph_discussion" class="section section_discussion" style="display:none;">
+        <h2>Methods</h2>
+        <p>
+          Use <a href="http://www.hpl.hp.com/research/linux/httperf/">httperf</a> to load different pages a fixed number of times, at a fixed rate, and record the response time and rate at which connections are accepted.  By varying the rate, we can see how the response time and connection rate are effected by increased load on the server.  Unlike log analysis, which relies on extrapolation to guess at maximum requests/second, Autograph actually stresses the system and yields real-world results.
+        </p>
+        <h2>Goals</h2>
+        <p>
+          Autograph will help you
+          <ul style="list-style: disc; font-size: 1.3em; padding-left: 25px; padding-bottom: 25px;">
+            <li>Compare the relative 'weight' of different pages, hopefully pointing you to which pages need more some caching or other form of optimization.</li>
+            <li>Determine rough maximum request rates that either a) block other calls, or b) increase response time beyond an acceptable limit.</li>
+          </ul>
+        </p>
+        <h2>Graphs</h2>
+        <h4>Demanded vs. Achieved request rate</h4>
+        <p>
+        Ideally, this graph would be a straight line at 45 degrees; for every request that is sent to the server, it accepts a connection, regardless of how many concurrent requests are made.  Realistically, this graph will start linear and degrade as network or software bottlenecks are hit. The point at which this graph breaks linearity indicates the maximum possible concurrent requests the system can successfully serve.
+        </p>
+        <h4>Demanded Request Rate vs. response time</h4>
+        <p>
+        Ideally, this graph would be flat and low, indicating consistent and fast responses times.  Realistically, this graph will either be slightly angled or flat followed by a dramatic uptick.  The point at which the response times dramatically increase will coincide with the point at which it cannot serve all requests.
+        </p>
+      </div>
+      <div id="tables" class="section section_tables" style="display:none;">
+
+            <div id="page_/?feed=comments-rss2" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/?feed=comments-rss2</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>10.4</td>
+    <td>8.8</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>62.2</td>
+    <td>8.6</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>54.9</td>
+    <td>0</td>
+    <td>114.1</td>
+    <td>9.0</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>0</td>
+    <td>165.9</td>
+    <td>9.5</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>0</td>
+    <td>217.7</td>
+    <td>9.9</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>129.9</td>
+    <td>129.9</td>
+    <td>129.8</td>
+    <td>0</td>
+    <td>269.3</td>
+    <td>14.5</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>154.9</td>
+    <td>154.9</td>
+    <td>154.4</td>
+    <td>0</td>
+    <td>321.2</td>
+    <td>13.8</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>179.6</td>
+    <td>179.6</td>
+    <td>178.0</td>
+    <td>0</td>
+    <td>372.3</td>
+    <td>18.6</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>203.7</td>
+    <td>203.7</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>422.4</td>
+    <td>17.5</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+            <div id="page_/?m=201005" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/?m=201005</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>27.1</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>162.4</td>
+    <td>8.8</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>0</td>
+    <td>297.5</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>0</td>
+    <td>433.0</td>
+    <td>9.5</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>104.8</td>
+    <td>0</td>
+    <td>568.2</td>
+    <td>9.9</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>130.0</td>
+    <td>130.0</td>
+    <td>129.8</td>
+    <td>0</td>
+    <td>703.3</td>
+    <td>14.0</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>146.4</td>
+    <td>146.4</td>
+    <td>154.4</td>
+    <td>0</td>
+    <td>792.2</td>
+    <td>15.0</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>179.8</td>
+    <td>179.8</td>
+    <td>179.8</td>
+    <td>0</td>
+    <td>972.8</td>
+    <td>18.1</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>204.4</td>
+    <td>204.4</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>1106.0</td>
+    <td>20.6</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+            <div id="page_/?s=serach" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/?s=serach</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>25.6</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>153.8</td>
+    <td>9.0</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>0</td>
+    <td>281.9</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>0</td>
+    <td>409.9</td>
+    <td>9.4</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>104.9</td>
+    <td>104.9</td>
+    <td>104.8</td>
+    <td>0</td>
+    <td>537.3</td>
+    <td>10.2</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>130.0</td>
+    <td>130.0</td>
+    <td>129.4</td>
+    <td>0</td>
+    <td>665.8</td>
+    <td>13.7</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>154.9</td>
+    <td>154.9</td>
+    <td>154.6</td>
+    <td>0</td>
+    <td>793.7</td>
+    <td>17.6</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>179.8</td>
+    <td>179.8</td>
+    <td>179.8</td>
+    <td>0</td>
+    <td>921.3</td>
+    <td>16.6</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>204.8</td>
+    <td>204.8</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>1049.1</td>
+    <td>20.3</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+            <div id="page_/" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>31.1</td>
+    <td>8.8</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>186.4</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>0</td>
+    <td>341.7</td>
+    <td>9.0</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>79.8</td>
+    <td>0</td>
+    <td>496.6</td>
+    <td>9.6</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>0</td>
+    <td>652.0</td>
+    <td>10.8</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>124.1</td>
+    <td>124.1</td>
+    <td>129.6</td>
+    <td>0</td>
+    <td>770.6</td>
+    <td>11.9</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>154.9</td>
+    <td>154.9</td>
+    <td>154.6</td>
+    <td>0</td>
+    <td>961.8</td>
+    <td>15.5</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>118.0</td>
+    <td>118.0</td>
+    <td>179.8</td>
+    <td>0</td>
+    <td>732.6</td>
+    <td>15.8</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>204.6</td>
+    <td>204.6</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>1270.8</td>
+    <td>20.9</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+            <div id="page_/wp-content/themes/default/style.css" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/wp-content/themes/default/style.css</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>52.5</td>
+    <td>0.7</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>314.8</td>
+    <td>0.7</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.1</td>
+    <td>55.1</td>
+    <td>55.0</td>
+    <td>0</td>
+    <td>577.1</td>
+    <td>0.7</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.1</td>
+    <td>80.1</td>
+    <td>80.0</td>
+    <td>0</td>
+    <td>839.3</td>
+    <td>0.6</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>105.1</td>
+    <td>105.1</td>
+    <td>105.0</td>
+    <td>0</td>
+    <td>1101.6</td>
+    <td>0.6</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>130.1</td>
+    <td>130.1</td>
+    <td>130.0</td>
+    <td>0</td>
+    <td>1363.6</td>
+    <td>0.7</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>155.1</td>
+    <td>155.1</td>
+    <td>155.0</td>
+    <td>0</td>
+    <td>1625.9</td>
+    <td>0.6</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>180.1</td>
+    <td>180.1</td>
+    <td>180.0</td>
+    <td>0</td>
+    <td>1887.9</td>
+    <td>0.6</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>205.1</td>
+    <td>205.1</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>2150.3</td>
+    <td>0.6</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+            <div id="page_/?p=1" class='report' >
+              <h2>Results for http://ec2-184-73-66-101.compute-1.amazonaws.com/?p=1</h2>
+              <div class="table_data" style="padding-bottom: 25px;">
+                <table>
+  <tr>
+    <th>rate</th>
+    <th>conn/s</th>
+    <th>req/s</th>
+    <th>replies/s avg</th>
+    <th>errors</th>
+    <th>net io (KB/s)</th>
+    <th>reply time</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>5.0</td>
+    <td>0</td>
+    <td>36.2</td>
+    <td>8.8</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>30.0</td>
+    <td>0</td>
+    <td>216.9</td>
+    <td>8.7</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>55.0</td>
+    <td>0</td>
+    <td>397.5</td>
+    <td>8.9</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>80.0</td>
+    <td>0</td>
+    <td>578.0</td>
+    <td>9.8</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>105.0</td>
+    <td>105.0</td>
+    <td>104.6</td>
+    <td>0</td>
+    <td>758.4</td>
+    <td>9.8</td>
+  </tr>
+  <tr>
+    <td>130</td>
+    <td>129.8</td>
+    <td>129.8</td>
+    <td>129.8</td>
+    <td>0</td>
+    <td>937.3</td>
+    <td>14.7</td>
+  </tr>
+  <tr>
+    <td>155</td>
+    <td>154.7</td>
+    <td>154.7</td>
+    <td>154.8</td>
+    <td>0</td>
+    <td>1117.3</td>
+    <td>14.9</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>140.1</td>
+    <td>140.1</td>
+    <td>179.4</td>
+    <td>0</td>
+    <td>1012.0</td>
+    <td>17.2</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>204.1</td>
+    <td>204.1</td>
+    <td>0.0</td>
+    <td>0</td>
+    <td>1474.2</td>
+    <td>16.9</td>
+  </tr>
+</table>
+
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div><!--end post-->
+  </div><!--end content-->
+  <div id="sidebar">
+    <ul>
+      <li class="widget widget_recent_entries">
+        <h2 class="widgettitle">Pages</h2>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./ec2.html">Testing on EC2</a></li>
+          <li><a href="./reading.html">Recommended Reading</a></li>
+          <li><a href="./wordpress.html">Example Report #1</a><span>Default wordpress install</span></li>
+          <li><a href="./wordpress-cached.html">Example Report #2</a><span>Default wordpress install with wp super-cache</span></li>
+        </ul>
+      </li>
+      <li class="widget widget_recent_entries">
+        <h2 class="widgettitle">Report Sections</h2>
+        <ul>
+          <li><a href="#" onclick="show_section('graphs');return false;">Graphs</a></li>
+          <li><a href="#" onclick="show_section('tables');return false;">Tables</a></li>
+          <li><a href="#" onclick="show_section('discussion');return false;">Discussion</a></li>
+        </ul>
+      </li>
+      <li class="section section_graphs">
+        <h2 class="widgettitle">Tested Pages</h2>
+        <div id="choices"></div>
+      </li>
+      <li>
+        <h2 class="widgettitle">Notes</h2>
+        <p>This is a fresh wordpress installation, using the WP Super Cache plugin.  Serving the cached pages can handle more than 10x what the dynamic pages can handle, with only a slight increase in response time.</p>
+      </li>
+    </ul>
+  </div><!--end sidebar-->
+    <div id="footer">
+      <p class="right">Generated fearlessly with <a href="http://nstielau.github.com/autograph">Autograph</a></p>
+      <p>Theme modified from "Vigilance Theme" by <a href="http://thethemefoundry.com">The Theme Foundry</a></p>
+    </div><!--end footer-->
+  </div><!--end wrapper-->
+    <script language="javascript" type="text/javascript">
+    function show_section(name) {
+      $('.section').hide();
+      $('.section_' + name).show();
+    }
+
+      var acolor;
+      var default_graph_options = {
+        series: {
+          lines: { show: true, lineWidth: 3 },
+          points: { show: true, radius: 4 }
+        },
+        legend: {
+          show: true,
+          backgroundColor: '#FFF',
+          backgroundOpacity: 0.9
+        },
+        series: {
+          lines: { show: true, lineWidth: 3 },
+          points: { show: true, fill: false },
+          shadowSize: 0,
+        },
+        xaxis: {},
+        yaxis: {
+          show: true,
+        },
+        grid: {
+          show: true,
+          backgroundColor: null,
+          borderWidth: 2,
+          hoverable: true,
+          tickColor: "#E1E8F0",
+        },
+        colors: ["#5bba47","#d86b6d","#3d8aea","#333333"]
+      };
+
+      // Callback function to show the tooltip
+      function showTooltip(item) {
+        var contents = "(" + item.datapoint[1] + "," + item.datapoint[0] + ")";
+        var x = item.pageX;
+        var y = item.pageY - 10;
+
+        var obj = $('<div id="flot-tooltip">' + contents + '</div>').css( {
+          padding: '5px',
+          position: 'absolute',
+          minWidth: '5em',
+          display: 'block',
+          top:  y+5,
+          left: x+5,
+          zIndex: 9999
+        });
+
+        obj.appendTo('body').fadeIn('200');
+      }
+
+      // Var to hold our previous point
+      var previousPoint = null;
+
+      // Bind to the plothover so we can show a tooltip
+      $(".flot-graph").bind("plothover", function (event, pos, item) {
+        if (item) {
+          if (previousPoint != item.datapoint) {
+            previousPoint = item.datapoint;
+            $("#flot-tooltip").remove();
+            showTooltip(item);
+          }
+        } else {
+          $('#flot-tooltip').remove().fadeOut('200');
+          previousPoint = null;
+        }
+      });
+
+      var request_rate_datasets = {
+  '1' : {label:  "Request rate for '/?feed=comments-rss2'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.0], [80.0, 80.0], [105.0, 105.0], [130.0, 129.9], [155.0, 154.9], [180.0, 179.6], [205.0, 203.7]]},
+'2' : {label:  "Request rate for '/?m=201005'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.0], [80.0, 80.0], [105.0, 105.0], [130.0, 130.0], [155.0, 146.4], [180.0, 179.8], [205.0, 204.4]]},
+'3' : {label:  "Request rate for '/?s=serach'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.0], [80.0, 80.0], [105.0, 104.9], [130.0, 130.0], [155.0, 154.9], [180.0, 179.8], [205.0, 204.8]]},
+'4' : {label:  "Request rate for '/'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.0], [80.0, 80.0], [105.0, 105.0], [130.0, 124.1], [155.0, 154.9], [180.0, 118.0], [205.0, 204.6]]},
+'5' : {label:  "Request rate for '/wp-content/themes/default/style.css'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.1], [80.0, 80.1], [105.0, 105.1], [130.0, 130.1], [155.0, 155.1], [180.0, 180.1], [205.0, 205.1]]},
+'6' : {label:  "Request rate for '/?p=1'", data: [[5.0, 5.0], [30.0, 30.0], [55.0, 55.0], [80.0, 80.0], [105.0, 105.0], [130.0, 129.8], [155.0, 154.7], [180.0, 140.1], [205.0, 204.1]]}
+      };
+
+      var response_time_datasets = {
+  '1' : {label:  "Response time for '/?feed=comments-rss2'", data: [[5.0, 8.8], [30.0, 8.6], [55.0, 9.0], [80.0, 9.5], [105.0, 9.9], [130.0, 14.5], [155.0, 13.8], [180.0, 18.6], [205.0, 17.5]]},
+'2' : {label:  "Response time for '/?m=201005'", data: [[5.0, 8.9], [30.0, 8.8], [55.0, 8.9], [80.0, 9.5], [105.0, 9.9], [130.0, 14.0], [155.0, 15.0], [180.0, 18.1], [205.0, 20.6]]},
+'3' : {label:  "Response time for '/?s=serach'", data: [[5.0, 8.9], [30.0, 9.0], [55.0, 8.9], [80.0, 9.4], [105.0, 10.2], [130.0, 13.7], [155.0, 17.6], [180.0, 16.6], [205.0, 20.3]]},
+'4' : {label:  "Response time for '/'", data: [[5.0, 8.8], [30.0, 8.9], [55.0, 9.0], [80.0, 9.6], [105.0, 10.8], [130.0, 11.9], [155.0, 15.5], [180.0, 15.8], [205.0, 20.9]]},
+'5' : {label:  "Response time for '/wp-content/themes/default/style.css'", data: [[5.0, 0.7], [30.0, 0.7], [55.0, 0.7], [80.0, 0.6], [105.0, 0.6], [130.0, 0.7], [155.0, 0.6], [180.0, 0.6], [205.0, 0.6]]},
+'6' : {label:  "Response time for '/?p=1'", data: [[5.0, 8.8], [30.0, 8.7], [55.0, 8.9], [80.0, 9.8], [105.0, 9.8], [130.0, 14.7], [155.0, 14.9], [180.0, 17.2], [205.0, 16.9]]}
+      };
+
+          var max_request_rate_datasets = [
+      {label:  "Max Request Rate for '/?feed=comments-rss2'", data: [[0, 203.0]]},
+{label:  "Max Request Rate for '/?m=201005'", data: [[1, 204.0]]},
+{label:  "Max Request Rate for '/?s=serach'", data: [[2, 204.0]]},
+{label:  "Max Request Rate for '/'", data: [[3, 204.0]]},
+{label:  "Max Request Rate for '/wp-content/themes/default/style.css'", data: [[4, 205.0]]},
+{label:  "Max Request Rate for '/?p=1'", data: [[5, 204.0]]}
+          ];
+
+      // hard-code color indices to prevent them from shifting as
+      // countries are turned on/off
+      var i = 0;
+      $.each(request_rate_datasets, function(key, val) {
+          val.color = i;
+          ++i;
+      });
+      i = 0;
+      $.each(response_time_datasets, function(key, val) {
+          val.color = i;
+          ++i;
+      });
+
+      // insert checkboxes
+      var choiceContainer = $("#choices");
+      $.each(request_rate_datasets, function(key, val) {
+          choiceContainer.append('<br/><input type="checkbox" name="' + key +
+                                 '" checked="checked" id="id' + key + '">' +
+                                 '<label style="font-size: 1.5em; padding-left: 10px;" for="id' + key + '">'
+                                  + val.label.replace("Request rate for ", "") + '</label>');
+      });
+      choiceContainer.find("input").click(plotAccordingToChoices);
+
+
+      function plotAccordingToChoices() {
+          var data1 = [];
+          var data2 = [];
+
+          choiceContainer.find("input:checked").each(function () {
+              var key = $(this).attr("name");
+              if (key && request_rate_datasets[key])
+                  data1.push(request_rate_datasets[key]);
+                if (key && response_time_datasets[key])
+                    data2.push(response_time_datasets[key]);
+          });
+
+          if (data1.length > 0)
+              $.plot($("#request_rate"), data1, default_graph_options);
+
+
+          if (data2.length > 0)
+              $.plot($("#response_time"), data2, default_graph_options);
+      }
+
+      plotAccordingToChoices();
+      $.plot($("#max_request_rate"), max_request_rate_datasets, $.merge({series: {lines: {show: false}, bars : {show: true}}}, default_graph_options));
+  </script>
+  </body>
+  </html>
