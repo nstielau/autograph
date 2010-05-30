@@ -16,7 +16,10 @@ TEST RUNNER
 HTML REPORT
   Improve table styles
 
-  Improve data-point mouse-over and styles
+  Data-point mouse-over
+    different formatters for each graph
+    transparent background
+    bigger text
 
   Put real connection/timeout etc. values in discussion.
 
