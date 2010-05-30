@@ -1,28 +1,23 @@
-# Compare multiple hosts hosts
+TEST RUNNER
+  Compare multiple hosts (maybe take full URIs instead of a host and set of URIs)
 
-# Deal with AcceptEncoding, add options
+  Trap exit and write output to file?
 
-# Control verbose output with a Logger, instead of just going to STDOUT
+  Add interactive mode ?
 
-# Don't include overview for one page...
+  Config file?
 
-# Pass-through httperf args
+  Remove default timeout httperf option...(what happens if it is removed?)
 
-# Config file?
-# Take a txt file for the urls
-
-# Remove default timeout httperf option...(what happens if it is removed?)
-# Add interactive mode
-
-# Trap exit and write output to file? (Can you have two traps?)
-
-# Skinning
+HTML REPORT
   Improve table styles
 
-# Put real connection/timeout etc. values in discussion.
+  Put real connection/timeout etc. values in discussion.
 
+DOCS
+  usage notes
+    Num conns must increase with rate
 
-# Docs
-  Add EC2 instructions
-
-# Add gh-pages with graphs
+BRANDING
+  logo
+  favicon
