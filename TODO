@@ -3,7 +3,11 @@ TEST RUNNER
 
   Trap exit and write output to file?
 
+  Handle SOAP?
+
   Add interactive mode ?
+
+  Replay log?
 
   Config file?
 
