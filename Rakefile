@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{Simple httperf runner with nice html reports with graphs.}
     gem.description = %Q{Autograph wraps httperf, running multiple tests while varying the parameters, graphing the output.}
     gem.email = "nick.stielau@gmail.com"
-    gem.homepage = "http://github.com/nstielau/autograph"
+    gem.homepage = "http://nstielau.github.com/autograph"
     gem.authors = ["Nick Stielau"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
