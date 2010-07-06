@@ -1,8 +1,6 @@
 class Configuration
   def initialize(opts={})
-    @conf = {'httperf_timeout' => 120,
-             'httperf_num-call'  => 1,
-             'httperf_num-conns' => 100,
+    @conf = {'httperf_num-conns' => 100,
              'httperf_rate' => 5,
              'port' => 80,
              'uri' => '/',
