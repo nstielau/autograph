@@ -69,7 +69,7 @@ class AutoPerf
     report = Table.new(COLUMN_NAMES)
 
     (configuration['low_rate']..configuration['high_rate']).step(configuration['rate_step']) do |rate|
-      results[rate] = benchmark(configuration.merge({'httperf_rate' => rate, 'httperf_uri' => uri}))
+      results[rate] = benchmark(configuration.merge({'httperf_rate' => rate, 'httperf_uri' => "'#{uri}'"}))
       report << results[rate].merge({'rate' => rate})
 
       puts report.to_s
