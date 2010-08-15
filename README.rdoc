@@ -1,5 +1,9 @@
 = autograph
 
+== STATUS:
+
+I don't know how many people use autograph.  I use it occasionally, and find it useful for sharing pretty graphs.  I SHOULD be able to merge a patch. NCS 8/2010
+
 == DESCRIPTION:
 
 Autograph drives httperf, varying the request rate and graphing the output.  This exercise provides graphical data showing how the requested resources hold up under an increasing rate, particularly with request to response time and achieved request rate.
