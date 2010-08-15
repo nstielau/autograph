@@ -26,3 +26,5 @@ eapis*
 *.gemspec
 
 *.html
+
+_site/*
